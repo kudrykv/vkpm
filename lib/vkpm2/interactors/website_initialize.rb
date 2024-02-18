@@ -2,14 +2,22 @@
 
 module VKPM2
   module Interactors
-    class ConfigSave
+    class WebsiteInitialize
       include Interactor
 
       def call
-        config.write
+        context.website = VKPM2::Adapters::Website.new(client:)
       end
 
       private
+
+      def client
+        VKPM2::Clients::Website.new(domain:)
+      end
+
+      def domain
+        config.backend_domain
+      end
 
       def config
         raise Error, 'config is not set' unless context.config

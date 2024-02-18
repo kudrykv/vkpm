@@ -15,8 +15,10 @@ module VKPM2
           username = prompt.ask('Username:', required: true)
           password = prompt.mask('Password:', required: true)
 
-          puts "Logging in as #{username}..."
-          puts "Password: #{password}..."
+          result = Organizers::AuthLogin.call(username:, password:)
+          raise Error, result.error if result.failure?
+
+          puts 'Logged in successfully'
         end
 
         private

@@ -27,6 +27,13 @@ module VKPM2
         client.write(force: true)
       end
 
+      def backend_domain
+        domain = client.fetch('backend.domain')
+        raise Error, 'Backend domain is not set' if domain.nil?
+
+        domain
+      end
+
       def to_h
         ACCEPTABLE_KEYS.each_with_object({}) do |key, hash|
           hash[key] = client.fetch(key)
@@ -37,7 +44,7 @@ module VKPM2
 
       attr_reader :client
 
-      ACCEPTABLE_KEYS = %w[backend.domain].freeze
+      ACCEPTABLE_KEYS = %w[backend.domain auth.cookies].freeze
     end
   end
 end
