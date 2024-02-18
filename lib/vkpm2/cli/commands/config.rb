@@ -6,7 +6,7 @@ module VKPM2
       class Config < Thor
         desc 'list', 'List all the config variables'
         def list
-          result = Interactors::GetConfig.call
+          result = Interactors::InitializeConfig.call
           raise if result.failure?
 
           puts Presenters::Console::Config.new(result.config)

@@ -2,7 +2,7 @@
 
 module VKPM2
   module Interactors
-    class GetConfig
+    class InitializeConfig
       include Interactor
 
       def call
