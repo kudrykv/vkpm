@@ -3,6 +3,7 @@
 require 'thor'
 require 'zeitwerk'
 require 'tty-config'
+require 'tty-prompt'
 require 'interactor'
 
 require_relative 'vkpm2/version'

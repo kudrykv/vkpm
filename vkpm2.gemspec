@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'nokogiri', '1.15'
   spec.add_dependency 'thor', '1.2'
   spec.add_dependency 'tty-config', '0.6.0'
+  spec.add_dependency 'tty-prompt', '0.23.1'
   spec.add_dependency 'zeitwerk', '2.6'
 
   # For more information and examples about making a new gem, check out our

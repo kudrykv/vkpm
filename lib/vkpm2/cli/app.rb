@@ -9,6 +9,9 @@ module VKPM2
 
       desc 'config', 'Configure vkpm'
       subcommand 'config', Commands::Config
+
+      desc 'auth', 'Authenticate with vkpm'
+      subcommand 'auth', Commands::Auth
     end
   end
 end
