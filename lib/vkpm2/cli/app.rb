@@ -12,6 +12,9 @@ module VKPM2
 
       desc 'auth', 'Authenticate with vkpm'
       subcommand 'auth', Commands::Auth
+
+      desc 'hours', 'Manage hours'
+      subcommand 'hours', Commands::Hours
     end
   end
 end

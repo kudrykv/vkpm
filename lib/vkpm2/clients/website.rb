@@ -5,7 +5,7 @@ module VKPM2
     class Website
       def initialize(domain:)
         @domain = domain
-        @auth_cookies = []
+        @auth_cookies = {}
       end
 
       def login(username, password)
@@ -17,6 +17,16 @@ module VKPM2
         raise Error, error_message(response) if response.status == 200
 
         response.cookies.to_a.map { |cookie| Entities::Cookie.new(cookie.name, cookie.value) }
+      end
+
+      def auth_cookies=(cookies)
+        @auth_cookies = cookies.reduce({}) { |acc, cookie| acc.merge(cookie.name => cookie.value) }
+      end
+
+      def history(year:, month:)
+        response = auth_http.post("#{domain}/history/", params: { year:, month: })
+
+        Entities::HistoryEntries.from_html(response.body.to_s)
       end
 
       private
@@ -38,6 +48,10 @@ module VKPM2
           username:,
           password:
         }
+      end
+
+      def auth_http
+        HTTP.cookies(**auth_cookies).headers(headers)
       end
 
       def headers
