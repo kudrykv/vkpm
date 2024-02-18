@@ -6,7 +6,7 @@ module VKPM2
       include Interactor
 
       def call
-        context.config.set(context.key, context.value)
+        context.config.set(context.config_key, context.config_value)
       end
     end
   end

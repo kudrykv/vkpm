@@ -36,7 +36,8 @@ module VKPM2
 
       def to_h
         ACCEPTABLE_KEYS.each_with_object({}) do |key, hash|
-          hash[key] = client.fetch(key)
+          hash[key[:name]] = client.fetch(key[:name])
+          hash[key[:name]] = '********' if key[:sensitive] && hash[key[:name]]
         end
       end
 
@@ -44,7 +45,11 @@ module VKPM2
 
       attr_reader :client
 
-      ACCEPTABLE_KEYS = %w[backend.domain auth.cookies].freeze
+      ACCEPTABLE_KEYS = [
+        {name: 'backend.domain'},
+        {name: 'auth.cookies', sensitive: true}
+      ].freeze
+      # ACCEPTABLE_KEYS = [backend.domain auth.cookies].freeze
     end
   end
 end

@@ -6,8 +6,8 @@ module VKPM2
       include Interactor
 
       def call
-        context.key = 'auth.cookies'
-        context.value = website.login(username, password).map(&:to_h).map(&:stringify_keys)
+        context.config_key = 'auth.cookies'
+        context.config_value = website.login(username, password).map(&:to_h).map(&:stringify_keys)
       end
 
       private

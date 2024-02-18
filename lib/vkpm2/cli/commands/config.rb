@@ -16,8 +16,8 @@ module VKPM2
         method_option :key, type: :string, required: true
         method_option :value, type: :string, required: true
         def set
-          result = Organizers::SetConfigValue.call(**options)
-          raise if result.failure?
+          result = Organizers::SetConfigValue.call(config_key: options[:key], config_value: options[:value])
+          raise Error, result.error if result.failure?
 
           puts "Set #{options[:key]} to #{options[:value]}"
         end
