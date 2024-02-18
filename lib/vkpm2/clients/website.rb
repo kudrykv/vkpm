@@ -23,10 +23,10 @@ module VKPM2
         @auth_cookies = cookies.reduce({}) { |acc, cookie| acc.merge(cookie.name => cookie.value) }
       end
 
-      def history(year:, month:)
-        response = auth_http.post("#{domain}/history/", params: { year:, month: })
+      def reported_entries(year:, month:)
+        response = auth_http.post("#{domain}/history/", form: { year:, month: })
 
-        Entities::HistoryEntries.from_html(response.body.to_s)
+        Models::ReportEntry.from_html(response.body.to_s)
       end
 
       private
@@ -59,10 +59,9 @@ module VKPM2
       end
 
       def csrf_header
-        csrf_cookie = auth_cookies.find { |cookie| cookie.name == 'csrftoken' }
-        return {} unless csrf_cookie
+        return {} unless auth_cookies['csrftoken']
 
-        { 'X-CSRFToken' => csrf_cookie.value }
+        { 'X-CSRFToken' => auth_cookies['csrftoken'] }
       end
 
       def error_message(response)

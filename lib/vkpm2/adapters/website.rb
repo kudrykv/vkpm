@@ -15,6 +15,10 @@ module VKPM2
         client.auth(cookies)
       end
 
+      def reported_entries(year:, month:)
+        client.reported_entries(year:, month:)
+      end
+
       private
 
       attr_reader :client

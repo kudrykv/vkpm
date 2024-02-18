@@ -9,7 +9,7 @@ module VKPM2
         option :year, type: :numeric, default: Time.now.year
         option :month, type: :numeric, default: Time.now.month
         def show
-          Organizers::GetReportedEntries.call
+          Organizers::GetReportedEntries.call(history_year: options[:year], history_month: options[:month])
         end
       end
     end
