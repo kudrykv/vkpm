@@ -1,0 +1,9 @@
+module VKPM2
+  module Adapters
+    class Config
+      private
+
+      attr_reader client: untyped
+    end
+  end
+end

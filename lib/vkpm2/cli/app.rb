@@ -6,6 +6,9 @@ module VKPM2
       def self.exit_on_failure?
         true
       end
+
+      desc 'config', 'Configure vkpm'
+      subcommand 'config', Commands::Config
     end
   end
 end

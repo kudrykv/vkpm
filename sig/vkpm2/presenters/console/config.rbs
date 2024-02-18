@@ -1,0 +1,11 @@
+module VKPM2
+  module Presenters
+    module Console
+      class Config
+        private
+
+        attr_reader config: untyped
+      end
+    end
+  end
+end

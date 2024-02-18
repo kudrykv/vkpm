@@ -1,0 +1,11 @@
+module VKPM2
+  module Clients
+    class Config
+      def respond_to_missing?: -> untyped
+
+      private
+
+      attr_reader client: untyped
+    end
+  end
+end

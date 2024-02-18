@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activesupport', '7.0.8'
   spec.add_dependency 'http', '5.1'
+  spec.add_dependency 'interactor', '3.1.2'
   spec.add_dependency 'nokogiri', '1.15'
   spec.add_dependency 'thor', '1.2'
   spec.add_dependency 'tty-config', '0.6.0'
