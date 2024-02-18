@@ -11,6 +11,10 @@ module VKPM2
         client.login(username, password)
       end
 
+      def auth(cookies)
+        client.auth(cookies)
+      end
+
       private
 
       attr_reader :client

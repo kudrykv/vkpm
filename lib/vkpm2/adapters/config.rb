@@ -34,6 +34,13 @@ module VKPM2
         domain
       end
 
+      def auth_cookies
+        cookies = client.fetch('auth.cookies')
+        raise Error, 'Auth cookies are not set' if cookies.nil?
+
+        cookies.map { |cookie| Entities::Cookie.new(cookie['name'], cookie['value']) }
+      end
+
       def to_h
         ACCEPTABLE_KEYS.each_with_object({}) do |key, hash|
           hash[key[:name]] = client.fetch(key[:name])

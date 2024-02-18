@@ -19,7 +19,7 @@ module VKPM2
         response.cookies.to_a.map { |cookie| Entities::Cookie.new(cookie.name, cookie.value) }
       end
 
-      def auth_cookies=(cookies)
+      def auth(cookies)
         @auth_cookies = cookies.reduce({}) { |acc, cookie| acc.merge(cookie.name => cookie.value) }
       end
 
