@@ -3,4 +3,8 @@
 
 require 'vkpm2'
 
-VKPM2::CLI::App.start(ARGV)
+begin
+  VKPM2::CLI::App.start(ARGV)
+rescue VKPM2::Error => e
+  puts e.message
+end

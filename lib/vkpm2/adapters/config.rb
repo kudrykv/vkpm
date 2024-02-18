@@ -15,9 +15,22 @@ module VKPM2
         client.write unless client.exist?
       end
 
+      # @param [String] key
+      def set(key, value)
+        raise VKPM2::Error, "Invalid key: #{key}" unless ACCEPTABLE_KEYS.include?(key)
+
+        client.set(key, value:)
+      end
+
+      def write
+        client.write(force: true)
+      end
+
       private
 
       attr_reader :client
+
+      ACCEPTABLE_KEYS = %w[backend.domain].freeze
     end
   end
 end

@@ -1,6 +1,8 @@
 module VKPM2
   module Adapters
     class Config
+      def set: -> untyped
+
       private
 
       attr_reader client: untyped
