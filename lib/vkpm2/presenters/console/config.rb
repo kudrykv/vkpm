@@ -9,7 +9,11 @@ module VKPM2
         end
 
         def to_s
-          'this will be the config presenter for the console interface'
+          config
+            .to_h
+            .sort_by { |key, _value| key }
+            .map { |row| "#{row[0]}: #{row[1]}" }
+            .join("\n")
         end
 
         private

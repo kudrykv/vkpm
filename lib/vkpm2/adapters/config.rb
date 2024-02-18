@@ -13,6 +13,7 @@ module VKPM2
         client.filename = FILE
 
         client.write unless client.exist?
+        client.read
       end
 
       # @param [String] key
@@ -24,6 +25,12 @@ module VKPM2
 
       def write
         client.write(force: true)
+      end
+
+      def to_h
+        ACCEPTABLE_KEYS.each_with_object({}) do |key, hash|
+          hash[key] = client.fetch(key)
+        end
       end
 
       private
