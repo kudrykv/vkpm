@@ -10,9 +10,9 @@ module VKPM2
         @client = client
 
         client.append_path(ABSOLUTE_DIR)
-        config.filename = FILE
+        client.filename = FILE
 
-        config.write unless config.exist?
+        client.write unless client.exist?
       end
 
       private
