@@ -2,3 +2,5 @@
 # frozen_string_literal: true
 
 require 'vkpm2'
+
+VKPM2::CLI::App.start(ARGV)

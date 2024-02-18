@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'thor'
+require 'zeitwerk'
+
 require_relative 'vkpm2/version'
 
 loader = Zeitwerk::Loader.for_gem
@@ -9,6 +12,6 @@ loader.inflector.inflect(
 )
 loader.setup
 
-module Vkpm2
+module VKPM2
   class Error < StandardError; end
 end
