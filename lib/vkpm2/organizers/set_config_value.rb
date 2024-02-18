@@ -5,9 +5,9 @@ module VKPM2
     class SetConfigValue
       include Interactor::Organizer
 
-      organize Interactors::InitializeConfig,
-               Interactors::SetConfig,
-               Interactors::SaveConfig
+      organize Interactors::ConfigInitialize,
+               Interactors::ConfigSetKeyValue,
+               Interactors::ConfigSave
     end
   end
 end

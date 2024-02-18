@@ -2,11 +2,11 @@
 
 module VKPM2
   module Interactors
-    class InitializeConfig
+    class ConfigSetKeyValue
       include Interactor
 
       def call
-        context.config = Adapters::Config.new
+        context.config.set(context.key, context.value)
       end
     end
   end

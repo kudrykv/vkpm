@@ -2,7 +2,7 @@
 
 module VKPM2
   module Interactors
-    class SaveConfig
+    class ConfigSave
       include Interactor
 
       def call
