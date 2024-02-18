@@ -1,0 +1,93 @@
+PATH
+  remote: .
+  specs:
+    vkpm2 (0.1.0)
+      activesupport (= 7.0.8)
+      http (= 5.1)
+      nokogiri (= 1.15)
+      thor (= 1.2)
+      tty-config (= 0.6.0)
+      zeitwerk (= 2.6)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (7.0.8)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
+    ast (2.4.2)
+    base64 (0.1.1)
+    concurrent-ruby (1.2.3)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    ffi (1.15.5)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
+    http (5.1.0)
+      addressable (~> 2.8)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.2)
+      llhttp-ffi (~> 0.4.0)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
+    json (2.6.3)
+    language_server-protocol (3.17.0.3)
+    llhttp-ffi (0.4.0)
+      ffi-compiler (~> 1.0)
+      rake (~> 13.0)
+    minitest (5.20.0)
+    nokogiri (1.15.0-arm64-darwin)
+      racc (~> 1.4)
+    parallel (1.24.0)
+    parser (3.2.2.3)
+      ast (~> 2.4.1)
+      racc
+    public_suffix (5.0.3)
+    racc (1.7.1)
+    rainbow (3.1.1)
+    rake (13.0.6)
+    regexp_parser (2.8.1)
+    rexml (3.2.6)
+    rubocop (1.56.2)
+      base64 (~> 0.1.1)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.2.2.3)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.29.0)
+      parser (>= 3.2.1.0)
+    ruby-progressbar (1.13.0)
+    thor (1.2.0)
+    tty-config (0.6.0)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8.2)
+    unicode-display_width (2.4.2)
+    zeitwerk (2.6.0)
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  rake (~> 13.0)
+  rubocop (~> 1.21)
+  vkpm2!
+
+BUNDLED WITH
+   2.4.21
