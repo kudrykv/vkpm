@@ -20,13 +20,13 @@ module VKPM2
       def year
         raise Error, 'year is not set' unless context.history_year
 
-        context.history_year
+        context.report_year
       end
 
       def month
         raise Error, 'month is not set' unless context.history_month
 
-        context.history_month
+        context.report_month
       end
     end
   end

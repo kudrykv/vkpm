@@ -11,6 +11,18 @@ module VKPM2
         def show
           result = Organizers::GetReportedEntries.call(history_year: options[:year], history_month: options[:month])
           raise Error, result.error if result.failure?
+
+          puts Presenters::Console::SimpleHours.new(year:, month:, report_entries: result.reported_entries)
+        end
+
+        private
+
+        def year
+          options[:year]
+        end
+
+        def month
+          options[:month]
         end
       end
     end
