@@ -14,19 +14,21 @@ module VKPM2
         end
 
         def to_s
-          date_range.map do |date|
-            day_entries = report_entries
-                    .select { |entry| entry.task.date == date }
-                    .sort_by { |entry| entry.task.starts_at }
-            blocks = day_entries.map(&method(:format_entry)).join(' ')
-            minutes = day_entries.map { |entry| entry.duration.in_minutes }.sum
-
-            time_for_day = format('(%-6s)', human_readable_time(minutes))
-            "#{date.strftime('%a %d')} #{time_for_day}: #{blocks}"
-          end.join("\n")
+          date_range.map(&method(:format_date_row)).join("\n")
         end
 
         private
+
+        def format_date_row(date)
+          day_entries = report_entries
+                          .select { |entry| entry.task.date == date }
+                          .sort_by { |entry| entry.task.starts_at }
+          blocks = day_entries.map(&method(:format_entry)).join(' ')
+          minutes = day_entries.map { |entry| entry.duration.in_minutes }.sum
+
+          time_for_day = format('(%-6s)', human_readable_time(minutes))
+          "#{date.strftime('%a %d')} #{time_for_day}: #{blocks}"
+        end
 
         def date_range
           start_of_month = Date.new(year, month, 1)
