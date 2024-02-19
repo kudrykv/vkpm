@@ -8,7 +8,8 @@ module VKPM2
       organize Interactors::ConfigInitialize,
                Interactors::WebsiteInitialize,
                Interactors::WebsiteAuth,
-               Interactors::WebsitePullReportedEntries
+               Interactors::WebsitePullReportedEntries,
+               Interactors::WebsiteHolidays
     end
   end
 end

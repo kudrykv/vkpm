@@ -29,9 +29,34 @@ module VKPM2
         Models::ReportEntry.from_html(response.body.to_s)
       end
 
+      def holidays_this_year
+        enable_all_blocks_in_dashboard
+
+        response = auth_http.get("#{domain}/dashboard/block/holiday_block/")
+
+        Models::Holiday.from_html(response.body.to_s)
+      end
+
       private
 
       attr_reader :domain, :auth_cookies
+
+      def enable_all_blocks_in_dashboard
+        uri = "#{domain}/dashboard/"
+        response = auth_http.get(uri)
+        dashboard_id = Nokogiri.parse(response.body.to_s).xpath('//input[@name="id"]').attr('value').to_s
+
+        form = csrf_form.merge(
+          id: dashboard_id,
+          user_salary_block: 'on',
+          birthdays_block: 'on',
+          devices_block: 'on',
+          holiday_block: 'on',
+          users_block: 'on'
+        )
+
+        auth_http.post("#{uri}/update/", form: form)
+      end
 
       def initial_csrf_cookie
         response = HTTP.get("#{domain}/login/")
@@ -50,6 +75,12 @@ module VKPM2
         }
       end
 
+      def csrf_form
+        return {} unless csrf
+
+        { csrfmiddlewaretoken: csrf }
+      end
+
       def auth_http
         HTTP.cookies(**auth_cookies).headers(headers)
       end
@@ -59,9 +90,13 @@ module VKPM2
       end
 
       def csrf_header
-        return {} unless auth_cookies['csrftoken']
+        return {} unless csrf
 
-        { 'X-CSRFToken' => auth_cookies['csrftoken'] }
+        { 'X-CSRFToken' => csrf }
+      end
+
+      def csrf
+        auth_cookies['csrftoken']
       end
 
       def error_message(response)

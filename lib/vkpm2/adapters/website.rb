@@ -19,6 +19,10 @@ module VKPM2
         client.reported_entries(year:, month:)
       end
 
+      def holidays_this_year
+        client.holidays_this_year
+      end
+
       private
 
       attr_reader :client
