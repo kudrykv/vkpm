@@ -64,7 +64,7 @@ module VKPM2
           end
 
           def to_s
-            line = [
+            blocks = [
               formatted_entries,
               formatted_holidays,
               formatted_break,
@@ -72,7 +72,11 @@ module VKPM2
               formatted_need_to_report
             ].reject(&:blank?).join(' ')
 
-            "#{formatted_date} #{formatted_time_spent_at_date}: #{line}"
+            line = "#{formatted_date} #{formatted_time_spent_at_date}: #{blocks}"
+
+            return pastel.italic(line) if date.saturday? || date.sunday?
+
+            line
           end
 
           private
