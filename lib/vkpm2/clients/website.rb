@@ -43,6 +43,12 @@ module VKPM2
         Models::Break.from_html(response.body.to_s)
       end
 
+      def available_projects
+        response = auth_http.get("#{domain}/report/")
+
+        Models::Project.from_html(response.body.to_s)
+      end
+
       private
 
       attr_reader :domain, :auth_cookies

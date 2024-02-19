@@ -27,6 +27,10 @@ module VKPM2
         client.breaks(year:)
       end
 
+      def available_projects
+        client.available_projects
+      end
+
       private
 
       attr_reader :client

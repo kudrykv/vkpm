@@ -41,6 +41,13 @@ module VKPM2
         cookies.map { |cookie| Entities::Cookie.new(cookie['name'], cookie['value']) }
       end
 
+      def default_project
+        project = client.fetch('default.project')
+        return nil if project.nil?
+
+        Entities::Project.new(id: project['id'], name: project['name'])
+      end
+
       def to_h
         ACCEPTABLE_KEYS.each_with_object({}) do |key, hash|
           hash[key[:name]] = client.fetch(key[:name])
@@ -53,8 +60,11 @@ module VKPM2
       attr_reader :client
 
       ACCEPTABLE_KEYS = [
-        {name: 'backend.domain'},
-        {name: 'auth.cookies', sensitive: true}
+        { name: 'backend.domain' },
+        { name: 'auth.cookies', sensitive: true },
+
+        { name: 'default.project.name' }
+
       ].freeze
       # ACCEPTABLE_KEYS = [backend.domain auth.cookies].freeze
     end

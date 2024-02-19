@@ -33,7 +33,10 @@ module VKPM2
         option :span, type: :string, aliases: '-m', desc: 'Span'
 
         def report
-          pp report_entry
+          result = Organizers::ReportHours.call(report_entry:)
+          raise Error, result.message if result.failure?
+
+          puts 'Reported'
         end
 
         private
