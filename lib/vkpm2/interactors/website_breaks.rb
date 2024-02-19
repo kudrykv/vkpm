@@ -2,11 +2,11 @@
 
 module VKPM2
   module Interactors
-    class WebsiteHolidays
+    class WebsiteBreaks
       include Interactor
 
       def call
-        context.holidays = website.holidays_this_year
+        context.breaks = website.breaks(year:)
       end
 
       private
@@ -15,6 +15,12 @@ module VKPM2
         raise Error, 'website not set' unless context.website
 
         context.website
+      end
+
+      def year
+        raise Error, 'year not set' unless context.report_year
+
+        context.report_year
       end
     end
   end

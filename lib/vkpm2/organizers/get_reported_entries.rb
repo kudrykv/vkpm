@@ -9,7 +9,8 @@ module VKPM2
                Interactors::WebsiteInitialize,
                Interactors::WebsiteAuth,
                Interactors::WebsitePullReportedEntries,
-               Interactors::WebsiteHolidays
+               Interactors::WebsiteHolidays,
+               Interactors::WebsiteBreaks
     end
   end
 end

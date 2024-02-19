@@ -16,7 +16,8 @@ module VKPM2
             year:,
             month:,
             report_entries: result.reported_entries,
-            holidays: result.holidays
+            holidays: result.holidays,
+            breaks: result.breaks
           )
         end
 

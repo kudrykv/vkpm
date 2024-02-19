@@ -37,6 +37,12 @@ module VKPM2
         Models::Holiday.from_html(response.body.to_s)
       end
 
+      def breaks(year:)
+        response = auth_http.post("#{domain}/breaks/", form: { year:, type: 'v', year_changed: 'true' })
+
+        Models::Break.from_html(response.body.to_s)
+      end
+
       private
 
       attr_reader :domain, :auth_cookies

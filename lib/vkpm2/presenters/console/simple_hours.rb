@@ -4,13 +4,14 @@ module VKPM2
   module Presenters
     module Console
       class SimpleHours
-        attr_reader :year, :month, :report_entries, :holidays, :pastel
+        attr_reader :year, :month, :report_entries, :holidays, :breaks, :pastel
 
-        def initialize(year:, month:, report_entries:, holidays:, pastel: Adapters::Pastel.new)
+        def initialize(year:, month:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
           @year = year
           @month = month
           @report_entries = report_entries
           @holidays = holidays
+          @breaks = breaks
           @pastel = pastel
         end
 
@@ -42,7 +43,12 @@ module VKPM2
           today_holidays = holidays.select { |holiday| holiday.date == date }
           formatted_holidays = today_holidays.map(&:name).join(', ')
 
-          "#{date.strftime('%a %d')} #{time_for_day}: #{blocks} #{formatted_holidays}"
+          having_break = breaks.any? { |a_break| a_break.active?(date) }
+          formatted_break = having_break ? 'Break' : ''
+
+          line = [blocks, formatted_holidays, formatted_break].reject(&:blank?).join(' ')
+
+          "#{date.strftime('%a %d')} #{time_for_day}: #{line}"
         end
 
         def date_range

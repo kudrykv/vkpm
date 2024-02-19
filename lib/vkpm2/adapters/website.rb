@@ -23,6 +23,10 @@ module VKPM2
         client.holidays_this_year
       end
 
+      def breaks(year:)
+        client.breaks(year:)
+      end
+
       private
 
       attr_reader :client
