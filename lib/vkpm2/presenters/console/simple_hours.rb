@@ -35,10 +35,15 @@ module VKPM2
         end
 
         def date_range
-          start_of_month = Date.new(year, month, 1)
-          end_of_month = start_of_month.end_of_month
+          (Date.new(year, month, 1)..end_date)
+        end
 
-          (start_of_month..end_of_month)
+        def end_date
+          today = Date.today
+
+          return today if today.month == month && today.year == year
+
+          Date.new(year, month, 1).end_of_month
         end
 
         def all_reported_minutes
