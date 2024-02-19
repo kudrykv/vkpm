@@ -14,6 +14,10 @@ module VKPM2
         @overtime = overtime
         @source = source
       end
+
+      def duration
+        task.duration
+      end
     end
   end
 end

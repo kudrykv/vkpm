@@ -6,6 +6,7 @@ PATH
       http (= 5.1)
       interactor (= 3.1.2)
       nokogiri (= 1.15)
+      pastel (= 0.8.0)
       thor (= 1.2)
       tty-config (= 0.6.0)
       tty-prompt (= 0.23.1)

@@ -13,6 +13,10 @@ module VKPM2
         @starts_at = starts_at
         @ends_at = ends_at
       end
+
+      def duration
+        (ends_at - starts_at).seconds
+      end
     end
   end
 end
