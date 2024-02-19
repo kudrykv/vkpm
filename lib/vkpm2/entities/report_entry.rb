@@ -5,7 +5,7 @@ module VKPM2
     class ReportEntry
       attr_accessor :id, :publish_date, :project, :activity, :task, :overtime, :source
 
-      def initialize(id:, publish_date:, project:, activity:, task:, overtime:, source:)
+      def initialize(id: nil, publish_date: nil, project:, activity:, task:, overtime: false, source: nil)
         @id = id
         @publish_date = publish_date
         @project = project
