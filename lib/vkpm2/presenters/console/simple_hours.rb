@@ -89,18 +89,6 @@ module VKPM2
             day_entries.map { |entry| entry.duration.in_minutes }.sum
           end
 
-          def formatted_holidays
-            today_holidays.map(&:name).join(', ')
-          end
-
-          def today_holidays
-            holidays.select { |holiday| holiday.date == date }
-          end
-
-          def day_entries
-            @day_entries ||= entries.select { |entry| entry.task.date == date }
-          end
-
           def formatted_entries
             day_entries.map(&method(:format_entry)).join(' ')
           end
@@ -111,6 +99,22 @@ module VKPM2
             block_text = "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}"
             block_format = format("%-#{size}.#{size}s", block_text)
             pastel.underscore(block_format)
+          end
+
+          def formatted_holidays
+            today_holidays.map(&:name).join(', ')
+          end
+
+          def today_holidays
+            holidays.select { |holiday| holiday.date == date }
+          end
+
+          def formatted_break
+            'Break' if having_a_break?
+          end
+
+          def having_a_break?
+            breaks.any? { |a_break| a_break.active?(date) }
           end
 
           def formatted_missing_report
@@ -126,25 +130,25 @@ module VKPM2
               !date.sunday?
           end
 
-          def formatted_break
-            'Break' if having_a_break?
-          end
-
-          def having_a_break?
-            breaks.any? { |a_break| a_break.active?(date) }
-          end
-
           def formatted_need_to_report
             'Need to report?' if need_to_report?
           end
 
           def need_to_report?
             date == Date.today &&
-              (day_entries.empty? || minutes_spent_at_date < 8.hours.in_minutes) &&
+              (day_entries.empty? || worked_less_than_8_hours?) &&
               today_holidays.empty? &&
               !having_a_break? &&
               !date.saturday? &&
               !date.sunday?
+          end
+
+          def worked_less_than_8_hours?
+            minutes_spent_at_date < 8.hours.in_minutes
+          end
+
+          def day_entries
+            @day_entries ||= entries.select { |entry| entry.task.date == date }
           end
 
           def human_readable_time(minutes)
