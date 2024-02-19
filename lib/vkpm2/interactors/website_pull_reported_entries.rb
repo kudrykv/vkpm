@@ -6,7 +6,7 @@ module VKPM2
       include Interactor
 
       def call
-        context.reported_entries = website.reported_entries(year: context.history_year, month: context.history_month)
+        context.reported_entries = website.reported_entries(year:, month:)
       end
 
       private
@@ -15,6 +15,18 @@ module VKPM2
         raise Error, 'website is not set' unless context.website
 
         context.website
+      end
+
+      def year
+        raise Error, 'year is not set' unless context.history_year
+
+        context.history_year
+      end
+
+      def month
+        raise Error, 'month is not set' unless context.history_month
+
+        context.history_month
       end
     end
   end
