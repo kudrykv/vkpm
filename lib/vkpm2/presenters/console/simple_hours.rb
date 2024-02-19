@@ -14,10 +14,19 @@ module VKPM2
         end
 
         def to_s
-          date_range.map(&method(:format_date_row)).join("\n")
+          <<~TEXT
+            #{pastel.bold("# #{month_name} #{year}")}
+            #{date_range.map(&method(:format_date_row)).join("\n")}
+
+            Reported hours: #{human_readable_time(all_reported_minutes)}
+          TEXT
         end
 
         private
+
+        def month_name
+          Date::MONTHNAMES[month]
+        end
 
         def format_date_row(date)
           day_entries = report_entries
@@ -43,6 +52,10 @@ module VKPM2
           block_text = "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}"
           block_format = format("%-#{size}.#{size}s", block_text)
           pastel.underscore(block_format)
+        end
+
+        def all_reported_minutes
+          report_entries.map { |entry| entry.duration.in_minutes }.sum
         end
 
         def human_readable_time(minutes)
