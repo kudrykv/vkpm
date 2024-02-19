@@ -46,7 +46,10 @@ module VKPM2
           having_break = breaks.any? { |a_break| a_break.active?(date) }
           formatted_break = having_break ? 'Break' : ''
 
-          line = [blocks, formatted_holidays, formatted_break].reject(&:blank?).join(' ')
+          missing_report = date <= Date.today && day_entries.empty? && today_holidays.empty? && !having_break && !date.saturday? && !date.sunday?
+          formatted_forgot = missing_report ? 'Forgot to report?' : ''
+
+          line = [blocks, formatted_holidays, formatted_break, formatted_forgot].reject(&:blank?).join(' ')
 
           "#{date.strftime('%a %d')} #{time_for_day}: #{line}"
         end
