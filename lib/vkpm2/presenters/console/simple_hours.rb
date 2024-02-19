@@ -38,7 +38,9 @@ module VKPM2
         def format_entry(entry)
           size = (entry.duration.in_minutes / 10).to_i
 
-          pastel.underscore("%-#{size}.#{size}s" % "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}")
+          block_text = "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}"
+          block_format = format("%-#{size}.#{size}s", block_text)
+          pastel.underscore(block_format)
         end
 
         def human_readable_time(minutes)
