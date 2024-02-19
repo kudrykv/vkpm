@@ -4,12 +4,13 @@ module VKPM2
   module Presenters
     module Console
       class SimpleHours
-        attr_reader :year, :month, :report_entries, :pastel
+        attr_reader :year, :month, :report_entries, :holidays, :pastel
 
-        def initialize(year:, month:, report_entries:, pastel: Adapters::Pastel.new)
+        def initialize(year:, month:, report_entries:, holidays:, pastel: Adapters::Pastel.new)
           @year = year
           @month = month
           @report_entries = report_entries
+          @holidays = holidays
           @pastel = pastel
         end
 
@@ -32,11 +33,16 @@ module VKPM2
           day_entries = report_entries
                           .select { |entry| entry.task.date == date }
                           .sort_by { |entry| entry.task.starts_at }
-          blocks = day_entries.map(&method(:format_entry)).join(' ')
-          minutes = day_entries.map { |entry| entry.duration.in_minutes }.sum
 
+          blocks = day_entries.map(&method(:format_entry)).join(' ')
+
+          minutes = day_entries.map { |entry| entry.duration.in_minutes }.sum
           time_for_day = format('(%-6s)', human_readable_time(minutes))
-          "#{date.strftime('%a %d')} #{time_for_day}: #{blocks}"
+
+          today_holidays = holidays.select { |holiday| holiday.date == date }
+          formatted_holidays = today_holidays.map(&:name).join(', ')
+
+          "#{date.strftime('%a %d')} #{time_for_day}: #{blocks} #{formatted_holidays}"
         end
 
         def date_range
