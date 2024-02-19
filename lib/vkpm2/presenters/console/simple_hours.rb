@@ -31,27 +31,7 @@ module VKPM2
         end
 
         def format_date_row(date)
-          day_entries = report_entries
-                          .select { |entry| entry.task.date == date }
-                          .sort_by { |entry| entry.task.starts_at }
-
-          blocks = day_entries.map(&method(:format_entry)).join(' ')
-
-          minutes = day_entries.map { |entry| entry.duration.in_minutes }.sum
-          time_for_day = format('(%-6s)', human_readable_time(minutes))
-
-          today_holidays = holidays.select { |holiday| holiday.date == date }
-          formatted_holidays = today_holidays.map(&:name).join(', ')
-
-          having_break = breaks.any? { |a_break| a_break.active?(date) }
-          formatted_break = having_break ? 'Break' : ''
-
-          missing_report = date <= Date.today && day_entries.empty? && today_holidays.empty? && !having_break && !date.saturday? && !date.sunday?
-          formatted_forgot = missing_report ? 'Forgot to report?' : ''
-
-          line = [blocks, formatted_holidays, formatted_break, formatted_forgot].reject(&:blank?).join(' ')
-
-          "#{date.strftime('%a %d')} #{time_for_day}: #{line}"
+          Line.new(date, report_entries, holidays, breaks, pastel:).to_s
         end
 
         def date_range
@@ -69,6 +49,12 @@ module VKPM2
           pastel.underscore(block_format)
         end
 
+        def time_spent_at_date(entries)
+          minutes = entries.map { |entry| entry.duration.in_minutes }.sum
+
+          format('(%-6s)', human_readable_time(minutes))
+        end
+
         def all_reported_minutes
           report_entries.map { |entry| entry.duration.in_minutes }.sum
         end
@@ -78,6 +64,109 @@ module VKPM2
             minutes, number = minutes.divmod(count)
             "#{number.to_i}#{name}" unless number.to_i.zero?
           end.compact.reverse.join
+        end
+
+        class Line
+          attr_reader :date, :entries, :holidays, :breaks, :pastel
+
+          def initialize(date, entries, holidays, breaks, pastel:)
+            @date = date
+            @entries = entries
+            @holidays = holidays
+            @breaks = breaks
+            @pastel = pastel
+          end
+
+          def to_s
+            line = [
+              formatted_entries,
+              formatted_holidays,
+              formatted_break,
+              formatted_missing_report,
+              formatted_need_to_report
+            ].reject(&:blank?).join(' ')
+
+            "#{formatted_date} #{formatted_time_spent_at_date}: #{line}"
+          end
+
+          private
+
+          def formatted_date
+            date.strftime('%a %d')
+          end
+
+          def formatted_time_spent_at_date
+            format('(%-6s)', human_readable_time(minutes_spent_at_date))
+          end
+
+          def minutes_spent_at_date
+            day_entries.map { |entry| entry.duration.in_minutes }.sum
+          end
+
+          def formatted_holidays
+            today_holidays.map(&:name).join(', ')
+          end
+
+          def today_holidays
+            holidays.select { |holiday| holiday.date == date }
+          end
+
+          def day_entries
+            @day_entries ||= entries.select { |entry| entry.task.date == date }
+          end
+
+          def formatted_entries
+            day_entries.map(&method(:format_entry)).join(' ')
+          end
+
+          def format_entry(entry)
+            size = (entry.duration.in_minutes / 10).to_i
+
+            block_text = "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}"
+            block_format = format("%-#{size}.#{size}s", block_text)
+            pastel.underscore(block_format)
+          end
+
+          def formatted_missing_report
+            'Forgot to report?' if missing_report?
+          end
+
+          def missing_report?
+            date < Date.today &&
+              day_entries.empty? &&
+              today_holidays.empty? &&
+              !having_a_break? &&
+              !date.saturday? &&
+              !date.sunday?
+          end
+
+          def formatted_break
+            'Break' if having_a_break?
+          end
+
+          def having_a_break?
+            breaks.any? { |a_break| a_break.active?(date) }
+          end
+
+          def formatted_need_to_report
+            'Need to report?' if need_to_report?
+          end
+
+          def need_to_report?
+            date == Date.today &&
+              (day_entries.empty? || minutes_spent_at_date < 8.hours.in_minutes) &&
+              today_holidays.empty? &&
+              !having_a_break? &&
+              !date.saturday? &&
+              !date.sunday?
+          end
+
+          def human_readable_time(minutes)
+            [[60, :m], [Float::INFINITY, :h]].map do |count, name|
+              minutes, number = minutes.divmod(count)
+              "#{number.to_i}#{name}" unless number.to_i.zero?
+            end.compact.reverse.join
+          end
         end
       end
     end
