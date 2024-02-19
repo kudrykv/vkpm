@@ -15,15 +15,15 @@ module VKPM2
 
         def to_s
           date_range.map do |date|
-            blocks = report_entries
-                     .select { |entry| entry.task.date == date }
-                     .sort_by { |entry| entry.task.starts_at }
-                     .map(&method(:format_entry))
-                     .join(' ')
+            day_entries = report_entries
+                    .select { |entry| entry.task.date == date }
+                    .sort_by { |entry| entry.task.starts_at }
+            blocks = day_entries.map(&method(:format_entry)).join(' ')
+            minutes = day_entries.map { |entry| entry.duration.in_minutes }.sum
 
-            "#{date.strftime('%a %d')} - #{blocks}"
-          end
-                    .join("\n")
+            time_for_day = format('(%-6s)', human_readable_time(minutes))
+            "#{date.strftime('%a %d')} #{time_for_day}: #{blocks}"
+          end.join("\n")
         end
 
         private
