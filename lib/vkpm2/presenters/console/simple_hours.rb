@@ -41,20 +41,6 @@ module VKPM2
           (start_of_month..end_of_month)
         end
 
-        def format_entry(entry)
-          size = (entry.duration.in_minutes / 10).to_i
-
-          block_text = "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}"
-          block_format = format("%-#{size}.#{size}s", block_text)
-          pastel.underscore(block_format)
-        end
-
-        def time_spent_at_date(entries)
-          minutes = entries.map { |entry| entry.duration.in_minutes }.sum
-
-          format('(%-6s)', human_readable_time(minutes))
-        end
-
         def all_reported_minutes
           report_entries.map { |entry| entry.duration.in_minutes }.sum
         end
