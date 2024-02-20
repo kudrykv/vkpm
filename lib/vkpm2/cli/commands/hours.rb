@@ -31,11 +31,12 @@ module VKPM2
         option :start_time, type: :string, aliases: '-b', desc: 'Start time'
         option :end_time, type: :string, aliases: '-f', desc: 'End time'
         option :span, type: :string, aliases: '-m', desc: 'Span'
+
         def report
           result = Organizers::ReportHours.call(report_entry:, report_year:, report_month:)
           raise Error, result.error if result.failure?
 
-          puts result.reported_entry
+          puts Presenters::Console::ReportedEntry.new(result.reported_entry)
         end
 
         private

@@ -66,6 +66,10 @@ module VKPM2
         put_next_entry(day_entries)
       end
 
+      def duration
+        (ends_at - starts_at).seconds
+      end
+
       private
 
       def put_first_entry
@@ -97,10 +101,6 @@ module VKPM2
         self.ends_at = starts_at + span
 
         raise Error, 'span spilled over to the next day' if ends_at > starts_at.end_of_day
-      end
-
-      def duration
-        (ends_at - starts_at).seconds
       end
     end
   end
