@@ -74,7 +74,6 @@ module VKPM2
         { name: 'default.activity.name' }
 
       ].freeze
-      # ACCEPTABLE_KEYS = [backend.domain auth.cookies].freeze
     end
   end
 end
