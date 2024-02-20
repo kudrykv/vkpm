@@ -18,7 +18,7 @@ module VKPM2
 
       # @param [String] key
       def set(key, value)
-        raise VKPM2::Error, "Invalid key: #{key}" unless ACCEPTABLE_KEYS.include?(key)
+        raise VKPM2::Error, "Invalid key: #{key}" unless ACCEPTABLE_KEYS.map { |entry| entry[:name] }.include?(key)
 
         client.set(key, value:)
       end
