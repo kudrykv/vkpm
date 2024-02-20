@@ -3,10 +3,9 @@
 module VKPM2
   module Entities
     class ReportEntry
-      attr_accessor :id, :publish_date, :project, :activity, :task, :overtime, :source
-      attr_accessor :errors
+      attr_accessor :id, :publish_date, :project, :activity, :task, :overtime, :source, :errors
 
-      def initialize(id: nil, publish_date: nil, project:, activity:, task:, overtime: false, source: nil)
+      def initialize(project:, activity:, task:, id: nil, publish_date: nil, overtime: false, source: nil)
         @id = id
         @publish_date = publish_date
         @project = project
@@ -30,6 +29,14 @@ module VKPM2
 
       def duration
         task.duration
+      end
+
+      def similar?(other)
+        instance_of?(other.class) &&
+          project.similar?(other.project) &&
+          activity.similar?(other.activity) &&
+          task.similar?(other.task) &&
+          overtime == other.overtime
       end
 
       private

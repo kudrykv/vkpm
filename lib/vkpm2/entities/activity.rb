@@ -20,6 +20,10 @@ module VKPM2
 
         errors.empty?
       end
+
+      def similar?(other)
+        instance_of?(other.class) && name.downcase == other.name.downcase
+      end
     end
   end
 end

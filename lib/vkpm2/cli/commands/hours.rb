@@ -35,7 +35,7 @@ module VKPM2
           result = Organizers::ReportHours.call(report_entry:, report_year:, report_month:)
           raise Error, result.error if result.failure?
 
-          puts 'Reported'
+          puts result.reported_entry
         end
 
         private

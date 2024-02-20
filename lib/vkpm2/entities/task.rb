@@ -47,12 +47,26 @@ module VKPM2
         errors.empty?
       end
 
+      def similar?(other)
+        instance_of?(other.class) &&
+          name == other.name &&
+          description.strip == other.description.strip &&
+          status == other.status &&
+          date == other.date &&
+          starts_at.hour == other.starts_at.hour &&
+          starts_at.min == other.starts_at.min &&
+          ends_at.hour == other.ends_at.hour &&
+          ends_at.min == other.ends_at.min
+      end
+
       def align(day_entries)
         return put_first_entry if day_entries.empty?
         return check_time_duration(day_entries) if time_range_is_set?
 
         put_next_entry(day_entries)
       end
+
+      private
 
       def put_first_entry
         return true if time_range_is_set?
