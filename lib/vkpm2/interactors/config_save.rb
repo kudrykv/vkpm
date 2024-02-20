@@ -4,17 +4,10 @@ module VKPM2
   module Interactors
     class ConfigSave
       include Interactor
+      include Vars::Configs
 
       def call
         config.write
-      end
-
-      private
-
-      def config
-        raise Error, 'config is not set' unless context.config
-
-        context.config
       end
     end
   end

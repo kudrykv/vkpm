@@ -4,9 +4,10 @@ module VKPM2
   module Interactors
     class ConfigSetKeyValue
       include Interactor
+      include Vars::Configs
 
       def call
-        context.config.set(context.config_key, context.config_value)
+        config.set(config_key, config_value)
       end
     end
   end
