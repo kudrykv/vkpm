@@ -35,6 +35,10 @@ module VKPM2
         client.available_activities
       end
 
+      def report(report_entry)
+        client.report(report_entry)
+      end
+
       private
 
       attr_reader :client

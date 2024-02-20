@@ -3,8 +3,7 @@
 module VKPM2
   module Entities
     class Task
-      attr_accessor :name, :description, :status, :date, :starts_at, :ends_at, :span
-      attr_accessor :errors
+      attr_accessor :name, :description, :status, :date, :starts_at, :ends_at, :span, :errors
 
       def initialize(name:, description:, status:, date:, starts_at:, ends_at:, span: nil)
         @name = name
@@ -32,7 +31,10 @@ module VKPM2
         errors << 'date is not set' if date.nil?
 
         errors << 'starts_at and ends_at or span must be set' if starts_at.nil? && ends_at.nil? && span.nil?
-        errors << 'only starts_at and ends_at or span must be set' if starts_at && ends_at && span
+
+        if starts_at && ends_at && span && ((ends_at - starts_at).seconds != span)
+          errors << 'starts_at, ends_at and span are not consistent'
+        end
 
         errors << 'starts_at is after ends_at' if !starts_at.nil? && !ends_at.nil? && starts_at > ends_at
 

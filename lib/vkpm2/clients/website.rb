@@ -55,6 +55,15 @@ module VKPM2
         Models::Activity.from_html(response.body.to_s)
       end
 
+      def report(report_entry)
+        raise Error, report_entry.errors.join(', ') unless report_entry.valid?
+
+        form = csrf_form.merge(report_entry_form(report_entry))
+        response = auth_http.post("#{domain}/report/", form:)
+
+        test_report_response_for_error(response)
+      end
+
       private
 
       attr_reader :domain, :auth_cookies
@@ -97,6 +106,29 @@ module VKPM2
         return {} unless csrf
 
         { csrfmiddlewaretoken: csrf }
+      end
+
+      def report_entry_form(entry)
+        {
+          project_id: entry.project.id,
+          report_date: entry.task.date.strftime('%Y-%m-%d'),
+          activity: entry.activity.id,
+          status: entry.task.status.to_i,
+          start_report_hours: entry.task.starts_at.hour,
+          start_report_minutes: entry.task.starts_at.min,
+          end_report_hours: entry.task.ends_at.hour,
+          end_report_minutes: entry.task.ends_at.min,
+          overtime: entry.overtime ? 2 : 1,
+          task_name: entry.task.name,
+          task_desc: entry.task.description
+        }
+      end
+
+      def test_report_response_for_error(response)
+        errlist = Nokogiri::HTML.parse(response.body.to_s).xpath('//*[contains(@class, "errorlist")]')
+        return nil if errlist.empty?
+
+        raise Error, errlist.xpath('.//li').map(&:text).join("\n")
       end
 
       def auth_http

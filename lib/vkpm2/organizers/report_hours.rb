@@ -11,7 +11,8 @@ module VKPM2
                VKPM2::Interactors::ReportHoursSettleProject,
                VKPM2::Interactors::ReportHoursSettleActivity,
                VKPM2::Interactors::WebsitePullReportedEntries,
-               VKPM2::Interactors::ReportHoursSettleTask
+               VKPM2::Interactors::ReportHoursSettleTask,
+               VKPM2::Interactors::ReportHours
     end
   end
 end
