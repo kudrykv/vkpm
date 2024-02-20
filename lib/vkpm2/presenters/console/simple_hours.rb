@@ -107,6 +107,9 @@ module VKPM2
 
             block_text = "#{human_readable_time(entry.duration.in_minutes)}, #{entry.project.name}"
             block_format = format("%-#{size}.#{size}s", block_text)
+
+            block_format = pastel.bold.red(block_format) if entry.overtime
+
             pastel.underscore(block_format)
           end
 
