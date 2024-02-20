@@ -16,6 +16,7 @@ module VKPM2
             Completeness: #{completeness}
 
             ##{entry.id}: #{entry.task.name}: #{entry.task.description}
+            #{overtime_note}
           STR
         end
 
@@ -39,6 +40,12 @@ module VKPM2
 
         def completeness
           "#{entry.task.status}%"
+        end
+
+        def overtime_note
+          return unless entry.overtime
+
+          "\nTHIS ENTRY MARKED AS OVERTIME"
         end
 
         def human_readable_time(minutes)
