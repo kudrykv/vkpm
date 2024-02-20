@@ -4,11 +4,12 @@ module VKPM2
   module Presenters
     module Console
       class SimpleHours
-        attr_reader :year, :month, :report_entries, :holidays, :breaks, :pastel
+
+        attr_reader :report_year, :report_month, :report_entries, :holidays, :breaks, :pastel
 
         def initialize(report_year:, report_month:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
-          @year = report_year
-          @month = report_month
+          @report_year = report_year
+          @report_month = report_month
           @report_entries = report_entries
           @holidays = holidays
           @breaks = breaks
@@ -17,7 +18,7 @@ module VKPM2
 
         def to_s
           <<~TEXT
-            #{pastel.bold("# #{month_name} #{year}")}
+            #{pastel.bold("# #{month_name} #{report_year}")}
             #{date_range.map(&method(:format_date_row)).join("\n")}
 
             Reported hours: #{human_readable_time(all_reported_minutes)}
@@ -28,7 +29,7 @@ module VKPM2
         private
 
         def month_name
-          Date::MONTHNAMES[month]
+          Date::MONTHNAMES[report_month]
         end
 
         def format_date_row(date)
@@ -36,15 +37,15 @@ module VKPM2
         end
 
         def date_range
-          (Date.new(year, month, 1)..end_date)
+          (Date.new(report_year, report_month, 1)..end_date)
         end
 
         def end_date
           today = Date.today
 
-          return today if today.month == month && today.year == year
+          return today if today.month == report_month && today.year == report_year
 
-          Date.new(year, month, 1).end_of_month
+          Date.new(report_year, report_month, 1).end_of_month
         end
 
         def all_reported_minutes
