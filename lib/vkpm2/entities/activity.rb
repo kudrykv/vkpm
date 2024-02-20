@@ -3,10 +3,9 @@
 module VKPM2
   module Entities
     class Activity
-      attr_accessor :id, :name
-      attr_accessor :errors
+      attr_accessor :id, :name, :errors
 
-      def initialize(id: nil, name:)
+      def initialize(name:, id: nil)
         @id = id
         @name = name
 

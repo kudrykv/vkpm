@@ -23,7 +23,7 @@ module VKPM2
               end_date: Date.parse(row[3]),
               used_days: row[4].to_i,
               approved: row[5].downcase == 'approved',
-              paid: row[7].downcase == 'paid',
+              paid: row[7].downcase == 'paid'
             }
           end
         end

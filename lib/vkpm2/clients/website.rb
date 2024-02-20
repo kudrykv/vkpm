@@ -2,6 +2,7 @@
 
 module VKPM2
   module Clients
+    # rubocop:disable Metrics/ClassLength
     class Website
       def initialize(domain:)
         @domain = domain
@@ -82,7 +83,7 @@ module VKPM2
           users_block: 'on'
         )
 
-        auth_http.post("#{uri}/update/", form: form)
+        auth_http.post("#{uri}/update/", form:)
       end
 
       def initial_csrf_cookie
@@ -160,5 +161,6 @@ module VKPM2
         "An error occurred while parsing the error message: #{e.message}"
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

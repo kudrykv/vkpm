@@ -28,6 +28,7 @@ module VKPM2
       def today_entries
         reported_entries.select { |entry| entry.task.date == task.date }
       end
+
       def reported_entries
         raise Error, 'reported entries are not set' unless context.reported_entries
 

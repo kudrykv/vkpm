@@ -3,8 +3,6 @@
 module VKPM2
   module Clients
     class Pastel
-      attr_reader :client
-
       def initialize(client: TTY::Pastel.new)
         @client = client
       end

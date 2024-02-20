@@ -89,6 +89,7 @@ module VKPM2
           Date.parse(options[:report_date])
         end
 
+        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         def parse_duration(str)
           return nil unless str
 
@@ -98,6 +99,7 @@ module VKPM2
 
           ((hours * 3600) + (minutes * 60) + seconds).seconds
         end
+        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       end
     end
   end
