@@ -4,6 +4,9 @@ module VKPM2
   module Interactors
     class ReportHoursSettleActivity
       include Interactor
+      include Vars::Configs
+      include Vars::Website
+      include Vars::ReportEntry
 
       def call
         guard_against_no_activity
@@ -11,12 +14,7 @@ module VKPM2
         report_entry.activity = activity || default_activity
         return unless activity.id.nil?
 
-        activities = website.available_activities
-        matched_activities = activities.select { |a| a.name.downcase.include?(activity.name.downcase) }
-        raise Error, 'ambiguous activity name' if matched_activities.size > 1
-        raise Error, 'activity not found' if matched_activities.empty?
-
-        report_entry.activity = matched_activities.first
+        report_entry.activity = matched_activity
       end
 
       private
@@ -31,26 +29,31 @@ module VKPM2
         report_entry.activity
       end
 
-      def report_entry
-        raise Error, 'no report entry specified' unless context.report_entry
-
-        context.report_entry
-      end
-
       def default_activity
         config.default_activity
       end
 
-      def config
-        raise Error, 'no config specified' unless context.config
+      def matched_activity
+        raise Error, message_ambiguity if matched_activities.size > 1
+        raise Error, message_not_found if matched_activities.empty?
 
-        context.config
+        matched_activities.first
       end
 
-      def website
-        raise Error, 'no website specified' unless context.website
+      def message_ambiguity
+        "ambiguous activity name `#{activity.name}` -- matched #{matched_activities.map(&:name).join(', ')}"
+      end
 
-        context.website
+      def message_not_found
+        "activity `#{activity.name}` not found. Available are #{activities.map(&:name).join(', ')}"
+      end
+
+      def matched_activities
+        @matched_activities ||= activities.select { |a| a.name.downcase.include?(activity.name.downcase) }
+      end
+
+      def activities
+        @activities ||= website.available_activities
       end
     end
   end
