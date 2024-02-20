@@ -3,7 +3,7 @@
 module VKPM2
   module Presenters
     module Console
-      class SimpleHours
+      class ReportedEntriesSimple
         attr_reader :report_year, :report_month, :report_entries, :holidays, :breaks, :pastel
 
         def initialize(report_year:, report_month:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
