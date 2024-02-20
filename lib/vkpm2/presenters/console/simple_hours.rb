@@ -21,6 +21,7 @@ module VKPM2
             #{date_range.map(&method(:format_date_row)).join("\n")}
 
             Reported hours: #{human_readable_time(all_reported_minutes)}
+            #{overtime_note}
           TEXT
         end
 
@@ -55,6 +56,16 @@ module VKPM2
             minutes, number = minutes.divmod(count)
             "#{number.to_i}#{name}" unless number.to_i.zero?
           end.compact.reverse.join
+        end
+
+        def overtime_note
+          return unless overtime_reported_minutes.positive?
+
+          pastel.red("\nYou have reported #{human_readable_time(overtime_reported_minutes)} of overtime")
+        end
+
+        def overtime_reported_minutes
+          report_entries.select(&:overtime).map { |entry| entry.duration.in_minutes }.sum
         end
 
         class Line
