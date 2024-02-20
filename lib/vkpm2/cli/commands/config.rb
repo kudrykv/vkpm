@@ -21,6 +21,15 @@ module VKPM2
 
           puts "Set #{options[:key]} to #{options[:value]}"
         end
+
+        desc 'unset', 'Unset a config variable'
+        method_option :key, type: :string, required: true
+        def unset
+          result = Organizers::UnsetConfigValue.call(config_key: options[:key])
+          raise Error, result.error if result.failure?
+
+          puts "Unset #{options[:key]}"
+        end
       end
     end
   end

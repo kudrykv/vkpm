@@ -23,6 +23,12 @@ module VKPM2
         client.set(key, value:)
       end
 
+      def unset(key)
+        raise VKPM2::Error, "Invalid key: #{key}" unless ACCEPTABLE_KEYS.map { |entry| entry[:name] }.include?(key)
+
+        client.delete(key)
+      end
+
       def write
         client.write(force: true)
       end
