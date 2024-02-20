@@ -34,17 +34,17 @@ module VKPM2
       end
 
       def matched_activity
-        raise Error, message_ambiguity if matched_activities.size > 1
-        raise Error, message_not_found if matched_activities.empty?
+        raise Error, ambiguous_activity_name if matched_activities.size > 1
+        raise Error, not_found if matched_activities.empty?
 
         matched_activities.first
       end
 
-      def message_ambiguity
+      def ambiguous_activity_name
         "ambiguous activity name `#{activity.name}` -- matched #{matched_activities.map(&:name).join(', ')}"
       end
 
-      def message_not_found
+      def not_found
         "activity `#{activity.name}` not found. Available are #{activities.map(&:name).join(', ')}"
       end
 

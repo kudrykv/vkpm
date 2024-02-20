@@ -4,6 +4,9 @@ module VKPM2
   module Interactors
     class ReportHoursSettleProject
       include Interactor
+      include Vars::Configs
+      include Vars::Website
+      include Vars::ReportEntry
 
       def call
         guard_against_no_project
@@ -11,11 +14,7 @@ module VKPM2
         report_entry.project = project || default_project
         return unless project.id.nil?
 
-        matched_projects = website.available_projects.select { |p| p.name.downcase.include?(project.name.downcase) }
-        raise Error, 'ambiguous project name' if matched_projects.size > 1
-        raise Error, 'project not found' if matched_projects.empty?
-
-        report_entry.project = matched_projects.first
+        report_entry.project = matched_project
       end
 
       private
@@ -30,26 +29,31 @@ module VKPM2
         report_entry.project
       end
 
-      def report_entry
-        raise Error, 'report_entry is required' unless context.report_entry
-
-        context.report_entry
-      end
-
       def default_project
         config.default_project
       end
 
-      def config
-        raise Error, 'config is required' unless context.config
+      def matched_project
+        raise Error, ambiguous_project_name if matched_projects.size > 1
+        raise Error, not_found if matched_projects.empty?
 
-        context.config
+        matched_projects.first
       end
 
-      def website
-        raise Error, 'website is required' unless context.website
+      def ambiguous_project_name
+        "ambiguous project name `#{project.name}` matched #{matched_projects.map(&:name).join(', ')}"
+      end
 
-        context.website
+      def not_found
+        "project `#{project.name}` not found"
+      end
+
+      def matched_projects
+        @matched_projects ||= available_projects.select { |p| p.name.downcase.include?(project.name.downcase) }
+      end
+
+      def available_projects
+        @available_projects ||= website.available_projects
       end
     end
   end
