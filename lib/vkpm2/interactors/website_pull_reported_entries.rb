@@ -4,18 +4,13 @@ module VKPM2
   module Interactors
     class WebsitePullReportedEntries
       include Interactor
+      include Vars::Website
 
       def call
         context.reported_entries = website.reported_entries(year:, month:)
       end
 
       private
-
-      def website
-        raise Error, 'website is not set' unless context.website
-
-        context.website
-      end
 
       def year
         raise Error, 'year is not set' unless context.report_year

@@ -4,6 +4,7 @@ module VKPM2
   module Interactors
     class WebsiteInitialize
       include Interactor
+      include Vars::Configs
 
       def call
         context.website = VKPM2::Adapters::Website.new(client:)
@@ -17,12 +18,6 @@ module VKPM2
 
       def domain
         config.backend_domain
-      end
-
-      def config
-        raise Error, 'config is not set' unless context.config
-
-        context.config
       end
     end
   end

@@ -4,6 +4,7 @@ module VKPM2
   module Interactors
     class WebsiteLogin
       include Interactor
+      include Vars::Website
 
       def call
         context.config_key = 'auth.cookies'
@@ -11,12 +12,6 @@ module VKPM2
       end
 
       private
-
-      def website
-        raise Error, 'website is required' unless context.website
-
-        context.website
-      end
 
       def username
         raise Error, 'username is required' unless context.username

@@ -4,17 +4,10 @@ module VKPM2
   module Interactors
     class WebsiteHolidays
       include Interactor
+      include Vars::Website
 
       def call
         context.holidays = website.holidays_this_year
-      end
-
-      private
-
-      def website
-        raise Error, 'website not set' unless context.website
-
-        context.website
       end
     end
   end
