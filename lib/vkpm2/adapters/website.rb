@@ -31,6 +31,10 @@ module VKPM2
         client.available_projects
       end
 
+      def available_activities
+        client.available_activities
+      end
+
       private
 
       attr_reader :client

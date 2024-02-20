@@ -49,6 +49,12 @@ module VKPM2
         Models::Project.from_html(response.body.to_s)
       end
 
+      def available_activities
+        response = auth_http.get("#{domain}/report/")
+
+        Models::Activity.from_html(response.body.to_s)
+      end
+
       private
 
       attr_reader :domain, :auth_cookies

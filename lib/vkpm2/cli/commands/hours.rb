@@ -34,7 +34,7 @@ module VKPM2
 
         def report
           result = Organizers::ReportHours.call(report_entry:)
-          raise Error, result.message if result.failure?
+          raise Error, result.error if result.failure?
 
           puts 'Reported'
         end

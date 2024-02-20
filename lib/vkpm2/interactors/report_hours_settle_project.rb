@@ -8,7 +8,7 @@ module VKPM2
       def call
         guard_against_no_project
 
-        report_entry.project = default_project if project.nil?
+        report_entry.project = project || default_project
         return unless project.id.nil?
 
         matched_projects = website.available_projects.select { |p| p.name.downcase.include?(project.name.downcase) }
@@ -23,7 +23,7 @@ module VKPM2
       def guard_against_no_project
         return unless project.nil? && default_project.nil?
 
-        context.fail!(message: 'no project name specified nor default project set')
+        raise Error, 'no project name specified nor default project set'
       end
 
       def project

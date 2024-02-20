@@ -48,6 +48,13 @@ module VKPM2
         Entities::Project.new(id: project['id'], name: project['name'])
       end
 
+      def default_activity
+        activity = client.fetch('default.activity')
+        return nil if activity.nil?
+
+        Entities::Activity.new(id: activity['id'], name: activity['name'])
+      end
+
       def to_h
         ACCEPTABLE_KEYS.each_with_object({}) do |key, hash|
           hash[key[:name]] = client.fetch(key[:name])
@@ -63,7 +70,8 @@ module VKPM2
         { name: 'backend.domain' },
         { name: 'auth.cookies', sensitive: true },
 
-        { name: 'default.project.name' }
+        { name: 'default.project.name' },
+        { name: 'default.activity.name' }
 
       ].freeze
       # ACCEPTABLE_KEYS = [backend.domain auth.cookies].freeze
