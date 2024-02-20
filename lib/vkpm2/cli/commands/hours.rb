@@ -5,16 +5,14 @@ module VKPM2
     module Commands
       class Hours < Thor
         desc 'show', 'Show hours'
-        option :year, type: :numeric, default: Time.now.year
-        option :month, type: :numeric, default: Time.now.month
-
+        option :report_date, type: :string, default: Date.today.to_s.split('-').first(2).reverse.join('-')
         def show
-          result = Organizers::GetReportedEntries.call(report_year: year, report_month: month)
+          result = Organizers::GetReportedEntries.call(report_year:, report_month:)
           raise Error, result.error if result.failure?
 
           puts Presenters::Console::SimpleHours.new(
-            year:,
-            month:,
+            report_year:,
+            report_month:,
             report_entries: result.reported_entries,
             holidays: result.holidays,
             breaks: result.breaks

@@ -6,9 +6,9 @@ module VKPM2
       class SimpleHours
         attr_reader :year, :month, :report_entries, :holidays, :breaks, :pastel
 
-        def initialize(year:, month:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
-          @year = year
-          @month = month
+        def initialize(report_year:, report_month:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
+          @year = report_year
+          @month = report_month
           @report_entries = report_entries
           @holidays = holidays
           @breaks = breaks
