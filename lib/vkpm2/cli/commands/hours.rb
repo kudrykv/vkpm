@@ -31,9 +31,8 @@ module VKPM2
         option :start_time, type: :string, aliases: '-b', desc: 'Start time'
         option :end_time, type: :string, aliases: '-f', desc: 'End time'
         option :span, type: :string, aliases: '-m', desc: 'Span'
-
         def report
-          result = Organizers::ReportHours.call(report_entry:)
+          result = Organizers::ReportHours.call(report_entry:, report_year:, report_month:)
           raise Error, result.error if result.failure?
 
           puts 'Reported'
@@ -47,6 +46,14 @@ module VKPM2
 
         def month
           options[:month]
+        end
+
+        def report_year
+          report_date&.year
+        end
+
+        def report_month
+          report_date&.month
         end
 
         def report_entry
@@ -66,27 +73,31 @@ module VKPM2
         end
 
         def task
-          return nil unless options[:task_name]
-
           Entities::Task.new(
             name: options[:task_name],
             description: options[:task_description],
             status: options[:task_status],
-            date: options[:report_date],
+            date: report_date,
             starts_at: options[:start_time],
             ends_at: options[:end_time],
             span: parse_duration(options[:span])
           )
         end
 
-        def parse_duration(str) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+        def report_date
+          return nil unless options[:report_date]
+
+          Date.parse(options[:report_date])
+        end
+
+        def parse_duration(str)
           return nil unless str
 
           hours = str.scan(/(\d+)h/).first&.first&.to_i || 0
           minutes = str.scan(/(\d+)m/).first&.first&.to_i || 0
           seconds = str.scan(/(\d+)s/).first&.first&.to_i || 0
 
-          (hours * 3600) + (minutes * 60) + seconds
+          ((hours * 3600) + (minutes * 60) + seconds).seconds
         end
       end
     end

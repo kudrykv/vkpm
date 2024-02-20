@@ -9,7 +9,9 @@ module VKPM2
                VKPM2::Interactors::WebsiteInitialize,
                VKPM2::Interactors::WebsiteAuth,
                VKPM2::Interactors::ReportHoursSettleProject,
-               VKPM2::Interactors::ReportHoursSettleActivity
+               VKPM2::Interactors::ReportHoursSettleActivity,
+               VKPM2::Interactors::WebsitePullReportedEntries,
+               VKPM2::Interactors::ReportHoursSettleTask
     end
   end
 end
