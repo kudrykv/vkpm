@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'vkpm2'
+require 'vkpm'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
