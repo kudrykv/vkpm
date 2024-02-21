@@ -30,12 +30,21 @@ module VKPM
         option :start_time, type: :string, aliases: '-b', desc: 'Start time'
         option :end_time, type: :string, aliases: '-f', desc: 'End time'
         option :span, type: :string, aliases: '-m', desc: 'Span'
-
+        option :overtime, type: :boolean, desc: 'Overtime', default: false
         def report
           result = Organizers::ReportHours.call(report_entry:, report_year:, report_month:)
           raise Error, result.error if result.failure?
 
           puts Presenters::Console::ReportedEntry.new(result.reported_entry)
+        end
+
+        desc 'delete', 'Delete hours'
+        option :id, type: :string, aliases: '-i', desc: 'Reported entry id'
+        def delete
+          result = Organizers::DeleteReportedEntry.call(entry_id: options[:id])
+          raise Error, result.error if result.failure?
+
+          puts 'Deleted.'
         end
 
         private
@@ -57,7 +66,7 @@ module VKPM
         end
 
         def report_entry
-          Entities::ReportEntry.new(project:, activity:, task:)
+          Entities::ReportEntry.new(project:, activity:, task:, overtime:)
         end
 
         def project
@@ -80,8 +89,12 @@ module VKPM
             date: report_date,
             starts_at: options[:start_time],
             ends_at: options[:end_time],
-            span: parse_duration(options[:span])
+            span: parse_duration(options[:span]),
           )
+        end
+
+        def overtime
+          options[:overtime]
         end
 
         def report_date

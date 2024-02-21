@@ -39,6 +39,10 @@ module VKPM
         client.report(report_entry)
       end
 
+      def delete_reported_entry(id)
+        client.delete_reported_entry(id)
+      end
+
       private
 
       attr_reader :client

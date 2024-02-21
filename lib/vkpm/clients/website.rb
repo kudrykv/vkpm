@@ -73,6 +73,11 @@ module VKPM
         test_report_response_for_error(response)
       end
 
+      def delete_reported_entry(id)
+        response = auth_http.get("#{domain}/report/delete/#{id}/")
+        raise Error, 'Something went wrong' if response.code != 302
+      end
+
       private
 
       attr_reader :domain, :auth_cookies
