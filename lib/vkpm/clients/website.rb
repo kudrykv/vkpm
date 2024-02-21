@@ -78,6 +78,15 @@ module VKPM
         raise Error, 'Something went wrong' if response.code != 302
       end
 
+      def compensation(report_date)
+        year = report_date.year
+        month = report_date.month
+
+        response = auth_http.post("#{domain}/dashboard/block/user_salary_block/", form: { year:, month: })
+
+        Models::Compensation.from_html(response.body.to_s, report_date)
+      end
+
       private
 
       attr_reader :domain, :auth_cookies

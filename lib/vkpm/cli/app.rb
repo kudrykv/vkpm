@@ -16,8 +16,8 @@ module VKPM
       desc 'hours', 'Manage hours'
       subcommand 'hours', Commands::Hours
 
-      desc 'salary', 'Review salary'
-      subcommand 'salary', Commands::Salary
+      desc 'compensation', 'Review compensation'
+      subcommand 'compensation', Commands::Compensation
     end
   end
 end

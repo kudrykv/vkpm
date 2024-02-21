@@ -2,7 +2,7 @@
 
 module VKPM
   module Entities
-    class SalaryRate
+    class CompensationRate
       attr_accessor :rate
 
       def initialize(rate)

@@ -43,6 +43,10 @@ module VKPM
         client.delete_reported_entry(id)
       end
 
+      def compensation(report_date)
+        client.compensation(report_date)
+      end
+
       private
 
       attr_reader :client
