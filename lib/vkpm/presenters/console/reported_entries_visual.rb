@@ -4,11 +4,10 @@ module VKPM
   module Presenters
     module Console
       class ReportedEntriesVisual
-        attr_reader :report_year, :report_month, :report_entries, :holidays, :breaks, :pastel
+        attr_reader :report_date, :report_entries, :holidays, :breaks, :pastel
 
-        def initialize(report_year:, report_month:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
-          @report_year = report_year
-          @report_month = report_month
+        def initialize(report_date:, report_entries:, holidays:, breaks:, pastel: Adapters::Pastel.new)
+          @report_date = report_date
           @report_entries = report_entries
           @holidays = holidays
           @breaks = breaks
@@ -66,6 +65,14 @@ module VKPM
 
         def overtime_reported_minutes
           report_entries.select(&:overtime).map { |entry| entry.duration.in_minutes }.sum
+        end
+
+        def report_month
+          report_date.month
+        end
+
+        def report_year
+          report_date.year
         end
 
         class Line

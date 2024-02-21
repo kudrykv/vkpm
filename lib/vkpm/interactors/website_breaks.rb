@@ -5,17 +5,10 @@ module VKPM
     class WebsiteBreaks
       include Interactor
       include Vars::Website
+      include Vars::ReportDate
 
       def call
         context.breaks = website.breaks(year:)
-      end
-
-      private
-
-      def year
-        raise Error, 'year not set' unless context.report_year
-
-        context.report_year
       end
     end
   end

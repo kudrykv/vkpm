@@ -8,12 +8,11 @@ module VKPM
         option :report_date, type: :string, default: Date.today.to_s.split('-').first(2).reverse.join('-')
         option :format, type: :string, default: 'visual', enum: %w[visual one-line]
         def show
-          result = Organizers::GetReportedEntries.call(report_year:, report_month:)
+          result = Organizers::GetReportedEntries.call(report_date:)
           raise Error, result.error if result.failure?
 
           puts Presenters::Console::ReportedEntries.new(options[:format]).present(
-            report_year:,
-            report_month:,
+            report_date:,
             report_entries: result.reported_entries,
             holidays: result.holidays,
             breaks: result.breaks
