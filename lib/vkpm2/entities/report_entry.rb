@@ -3,18 +3,19 @@
 module VKPM2
   module Entities
     class ReportEntry
-      attr_accessor :id, :publish_date, :project, :activity, :task, :overtime, :source, :errors
+      attr_accessor :id, :publish_date, :project, :activity, :task, :overtime, :can_edit, :source, :errors
 
-      def initialize(project:, activity:, task:, id: nil, publish_date: nil, overtime: false, source: nil)
-        @id = id
-        @publish_date = publish_date
-        @project = project
-        @activity = activity
-        @task = task
-        @overtime = overtime
-        @source = source
+      def initialize(project:, activity:, task:, id: nil, publish_date: nil, overtime: false, can_edit: false, source: nil)
+        self.id = id
+        self.publish_date = publish_date
+        self.project = project
+        self.activity = activity
+        self.task = task
+        self.overtime = overtime
+        self.can_edit = can_edit
+        self.source = source
 
-        @errors = []
+        self.errors = []
       end
 
       def valid?
