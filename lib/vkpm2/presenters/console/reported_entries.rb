@@ -8,8 +8,10 @@ module VKPM2
 
         def initialize(format)
           case format
-          when 'simple'
-            @presenter = ReportedEntriesSimple
+          when 'visual'
+            self.presenter = ReportedEntriesVisual
+          when 'one-line'
+            self.presenter = ReportedEntriesOneLine
           else
             raise Error, "Unknown format: #{format}"
           end

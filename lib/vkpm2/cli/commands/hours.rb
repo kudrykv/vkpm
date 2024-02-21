@@ -6,7 +6,7 @@ module VKPM2
       class Hours < Thor
         desc 'show', 'Show hours'
         option :report_date, type: :string, default: Date.today.to_s.split('-').first(2).reverse.join('-')
-        option :format, type: :string, default: 'simple', enum: %w[simple one-line]
+        option :format, type: :string, default: 'visual', enum: %w[visual one-line]
         def show
           result = Organizers::GetReportedEntries.call(report_year:, report_month:)
           raise Error, result.error if result.failure?
