@@ -12,7 +12,7 @@ module VKPM
         client.append_path(ABSOLUTE_DIR)
         client.filename = FILE
 
-        client.write unless client.exist?
+        write unless client.exist?
         client.read
       end
 
