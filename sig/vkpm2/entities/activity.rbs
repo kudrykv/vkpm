@@ -1,7 +1,0 @@
-module VKPM2
-  module Entities
-    class Activity
-      attr_accessor name: String
-    end
-  end
-end
