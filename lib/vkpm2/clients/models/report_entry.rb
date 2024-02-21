@@ -15,6 +15,12 @@ module VKPM2
                     .sort_by { |entry| entry.task.date }
           end
 
+          def from_report_html_editable_ids(html)
+            Nokogiri::HTML(html)
+                    .xpath('//*[contains(@class, "report_table")]//tr[contains(@class, "report")]')
+                    .map { |tr| tr.xpath('.//td').first.text }
+          end
+
           def general_line(tr)
             tr.xpath('.//td').to_a.map(&:text).map(&:strip)
           end

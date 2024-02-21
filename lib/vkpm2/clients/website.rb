@@ -27,7 +27,15 @@ module VKPM2
       def reported_entries(year:, month:)
         response = auth_http.post("#{domain}/history/", form: { year:, month: })
 
-        Models::ReportEntry.from_html(response.body.to_s)
+        history_entries = Models::ReportEntry.from_html(response.body.to_s)
+
+        response = auth_http.get("#{domain}/report/")
+
+        editable_ids = Models::ReportEntry.from_report_html_editable_ids(response.body.to_s)
+
+        history_entries.each do |entry|
+          entry.can_edit = editable_ids.include?(entry.id)
+        end
       end
 
       def holidays_this_year

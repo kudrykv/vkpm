@@ -34,12 +34,20 @@ module VKPM2
           end
 
           def to_s
-            "#{id} > #{date}, #{project}, #{activity}, #{completeness}, #{duration}, #{entry.task.name}"
+            "#{overtime_signifier} #{id} > #{date}, #{project}, #{activity}, #{completeness}, #{duration}, #{entry.task.name}".strip
           end
 
           private
 
+          def overtime_signifier
+            return '' unless entry.overtime
+
+            'OVERTIME'
+          end
+
           def id
+            return "<#{entry.id}>" if entry.can_edit
+
             "##{entry.id}"
           end
 
