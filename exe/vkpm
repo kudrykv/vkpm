@@ -7,4 +7,6 @@ begin
   VKPM::CLI::App.start(ARGV)
 rescue VKPM::Error => e
   puts e.message
+rescue Interrupt
+  puts 'Interrupted'
 end
