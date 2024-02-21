@@ -30,7 +30,7 @@ module VKPM
       end
 
       def write
-        client.write(force: true)
+        client.write(force: true, create: true)
       end
 
       def backend_domain
