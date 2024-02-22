@@ -9,6 +9,18 @@ module VKPM
         self.date = date
         self.compensation = compensation
       end
+
+      def amount
+        compensation.amount
+      end
+
+      def interval
+        compensation.interval
+      end
+
+      def currency
+        '$'
+      end
     end
   end
 end

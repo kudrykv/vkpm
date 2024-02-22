@@ -8,6 +8,10 @@ module VKPM
       def initialize(amount)
         self.amount = amount
       end
+
+      def interval
+        'month'
+      end
     end
   end
 end

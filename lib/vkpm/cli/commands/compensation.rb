@@ -10,7 +10,7 @@ module VKPM
           result = Organizers::CompensationCheck.call(report_date:)
           raise Error, result.error if result.failure?
 
-          puts result.compensation
+          puts Presenters::Console::Compensation.new(result.compensation)
         end
 
         private
