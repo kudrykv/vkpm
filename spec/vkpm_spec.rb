@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Vkpm2 do
+RSpec.describe VKPM do
   it 'has a version number' do
-    expect(Vkpm2::VERSION).not_to be_nil
+    expect(Vkpm::VERSION).not_to be_nil
   end
 end
