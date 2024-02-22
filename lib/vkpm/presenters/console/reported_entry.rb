@@ -12,7 +12,7 @@ module VKPM
 
         def to_s
           <<~STR
-            Reported #{duration} (#{from} - #{to}) of #{activity} time.
+            Reported #{duration} (#{from} - #{to}) of #{activity} time for #{date}.
             Completeness: #{completeness}
 
             ##{entry.id}: #{entry.task.name}: #{entry.task.description}
@@ -36,6 +36,12 @@ module VKPM
 
         def activity
           entry.activity.name.downcase
+        end
+
+        def date
+          return 'today' if entry.task.date == Date.today
+
+          entry.task.date.strftime('%A, %d')
         end
 
         def completeness

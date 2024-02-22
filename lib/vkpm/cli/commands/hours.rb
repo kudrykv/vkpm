@@ -31,7 +31,7 @@ module VKPM
         option :span, type: :string, aliases: '-m', desc: 'Span'
         option :overtime, type: :boolean, desc: 'Overtime', default: false
         def report
-          result = Organizers::ReportHours.call(report_entry:, report_year:, report_month:)
+          result = Organizers::ReportHours.call(report_entry:, report_date:)
           raise Error, result.error if result.failure?
 
           puts Presenters::Console::ReportedEntry.new(result.reported_entry)
