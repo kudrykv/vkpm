@@ -9,4 +9,6 @@ rescue VKPM::Error => e
   puts e.message
 rescue Interrupt
   puts 'Interrupted'
+rescue HTTP::ConnectionError => e
+  puts "Could not resolve host. Make sure it is correct, you're connected to the internet or have VPN enabled."
 end
