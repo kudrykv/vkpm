@@ -25,7 +25,7 @@ module VKPM
             doc
               .xpath('//tr[contains(., "rate")]//td')
               .map(&:text)
-              .select { |text| text.match /\d+/ }
+              .select { |text| text.match(/\d+/) }
               .map { |text| text.gsub(/^\D+(\d+\.\d+)\D*$/, '\1') }
               .map(&:to_f)
               .max

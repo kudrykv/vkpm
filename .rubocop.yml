@@ -18,3 +18,5 @@ Naming/MethodParameterName:
     - tr
     - id
 
+RSpec/MultipleExpectations:
+  Enabled: false

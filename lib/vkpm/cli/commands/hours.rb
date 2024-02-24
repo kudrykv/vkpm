@@ -88,7 +88,7 @@ module VKPM
             date: report_date,
             starts_at: options[:start_time],
             ends_at: options[:end_time],
-            span: parse_duration(options[:span]),
+            span: parse_duration(options[:span])
           )
         end
 
