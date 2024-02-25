@@ -148,10 +148,12 @@ module VKPM
       end
 
       def test_report_response_for_error(response)
+        raise ReportError, response.body.to_s if response.status == 400
+
         errlist = Nokogiri::HTML.parse(response.body.to_s).xpath('//*[contains(@class, "errorlist")]')
         return nil if errlist.empty?
 
-        raise Error, errlist.xpath('.//li').map(&:text).join("\n")
+        raise ReportError, errlist.xpath('.//li').map(&:text).join("\n")
       end
 
       def auth_http
