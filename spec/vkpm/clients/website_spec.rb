@@ -124,4 +124,29 @@ RSpec.describe VKPM::Clients::Website do
       end
     end
   end
+
+  describe '.available_activities' do
+    context 'when the user is authorized' do
+      let(:expected_activities) do
+        [
+          VKPM::Entities::Activity.new(id: '0', name: 'Estimate'),
+          VKPM::Entities::Activity.new(id: '1', name: 'Development'),
+          VKPM::Entities::Activity.new(id: '2', name: 'Testing'),
+          VKPM::Entities::Activity.new(id: '3', name: 'Bugfixing'),
+          VKPM::Entities::Activity.new(id: '4', name: 'Management'),
+          VKPM::Entities::Activity.new(id: '5', name: 'Analysis')
+        ]
+      end
+
+      it 'returns a list of activities' do
+        VCR.use_cassette('website/available_activities') do
+          cookies = website.login(username, password)
+          website.auth(cookies)
+          activities = website.available_activities
+
+          expect(activities).to eq(expected_activities)
+        end
+      end
+    end
+  end
 end
