@@ -15,7 +15,7 @@ module VKPM
         form = login_form(username, password, csrf_cookie)
 
         response = HTTP.cookies(cookies).post("#{domain}/login/", form:, headers:)
-        raise Error, error_message(response) if response.status == 200
+        raise BadCredentialsError, error_message(response) if response.status == 200
 
         response.cookies.to_a.map { |cookie| Entities::Cookie.new(cookie.name, cookie.value) }
       end

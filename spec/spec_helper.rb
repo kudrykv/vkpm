@@ -2,6 +2,11 @@
 
 require 'vkpm'
 require 'rspec'
+require 'vcr'
+require 'webmock/rspec'
+require 'uri/http'
+
+require_relative 'support/vcr'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

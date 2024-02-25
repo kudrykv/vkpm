@@ -1,0 +1,159 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://vkpm.stub.local/login/
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Connection:
+      - close
+      Host:
+      - vkpm.stub.local
+      User-Agent:
+      - http.rb/5.1.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Feb 2024 12:36:29 GMT
+      Server:
+      - Apache/2.4.25 (Debian)
+      Vary:
+      - Cookie,Accept-Encoding
+      Set-Cookie:
+      - csrftoken=stub-csrf-token; expires=Sun, 23-Feb-2025 12:36:29 GMT; Max-Age=31449600;
+        Path=/
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=utf8
+    body:
+      encoding: ASCII-8BIT
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-us\" xml:lang=\"en-us\" >\n<head>\n
+        \   <title>Log in | Vakoms site admin</title>\n    <link rel=\"stylesheet\"
+        type=\"text/css\" href=\"/static/admin/css/base.css\" />\n    <link rel=\"stylesheet\"
+        type=\"text/css\" href=\"/static/admin/css/login.css\" />\n    <!--[if lte
+        IE 7]><link rel=\"stylesheet\" type=\"text/css\" href=\"/static/admin/css/ie.css\"
+        /><![endif]-->\n    <script type=\"text/javascript\">window.__admin_media_prefix__
+        = \"/static/admin/\";</script>\n    <meta name=\"robots\" content=\"NONE,NOARCHIVE\"
+        />\n</head>\n<body class=\"login\">\n<!-- Container -->\n<div id=\"container\">\n
+        \   <!-- Header -->\n    <div id=\"header\">\n        <div id=\"branding\"><h1
+        id=\"site-name\">Log in, please</h1></div>\n    </div>\n    <!-- END Header
+        -->\n    <!-- Content -->\n    <div id=\"content\" class=\"colM\">\n        <div
+        id=\"content-main\">\n        \n            <form method=\"POST\" action=\".\"
+        id=\"login-form\">\n                <input type=\"hidden\" name=\"csrfmiddlewaretoken\"
+        value=\"stub-csrf-token\">\n                <div class=\"form-row\">\n                    <label
+        for=\"id_username\" class=\"required\"><label for=\"id_username\">Username:</label></label>
+        <input id=\"id_username\" maxlength=\"254\" name=\"username\" type=\"text\"
+        />\n                </div>\n                <div class=\"form-row\">\n                    <label
+        for=\"id_password\" class=\"required\"><label for=\"id_password\">Password:</label></label>
+        <input id=\"id_password\" name=\"password\" type=\"password\" />\n                    <input
+        type=\"hidden\" name=\"next\" value=\"/\" />\n                </div>\n                <div
+        class=\"submit-row\">\n                    <label>&nbsp;</label>\n                    <input
+        type=\"submit\" value=\"Log in\" />\n                </div>\n            </form>\n
+        \           <script type=\"text/javascript\">\n                document.getElementById('id_username').focus()\n
+        \           </script>\n        </div>\n        <br class=\"clear\" />\n    </div>\n
+        \   <!-- END Content -->\n    <div id=\"footer\"></div>\n</div>\n<!-- END
+        Container -->\n</body>\n</html>\n"
+  recorded_at: Sun, 25 Feb 2024 12:36:29 GMT
+- request:
+    method: post
+    uri: https://vkpm.stub.local/login/
+    body:
+      encoding: ASCII-8BIT
+      string: csrfmiddlewaretoken=stub-csrf-token&username=stub-user&password=stub-password&
+    headers:
+      Accept:
+      - "*/*"
+      Referer:
+      - https://vkpm.stub.local/login/
+      Connection:
+      - close
+      Cookie:
+      - csrftoken=stub-csrf-token;
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - vkpm.stub.local
+      User-Agent:
+      - http.rb/5.1.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 25 Feb 2024 12:36:29 GMT
+      Server:
+      - Apache/2.4.25 (Debian)
+      Vary:
+      - Cookie,Accept-Encoding
+      Set-Cookie:
+      - csrftoken=stub-csrf-token; expires=Sun, 23-Feb-2025 12:36:29 GMT; Max-Age=31449600;
+        Path=/
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=utf8
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
+        <head>
+            <title>Log in | Vakoms site admin</title>
+            <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+            <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" />
+            <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+            <script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+            <meta name="robots" content="NONE,NOARCHIVE" />
+        </head>
+        <body class="login">
+        <!-- Container -->
+        <div id="container">
+            <!-- Header -->
+            <div id="header">
+                <div id="branding"><h1 id="site-name">Log in, please</h1></div>
+            </div>
+            <!-- END Header -->
+            <!-- Content -->
+            <div id="content" class="colM">
+                <div id="content-main">
+                <ul class="errorlist"><li>__all__<ul class="errorlist"><li>Please enter a correct username and password. Note that both fields may be case-sensitive.</li></ul></li></ul>
+                    <form method="POST" action="." id="login-form">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="stub-csrf-token">
+                        <div class="form-row">
+                            <label for="id_username" class="required"><label for="id_username">Username:</label></label> <input id="id_username" maxlength="254" name="username" type="text" value="wrong" />
+                        </div>
+                        <div class="form-row">
+                            <label for="id_password" class="required"><label for="id_password">Password:</label></label> <input id="id_password" name="password" type="password" />
+                            <input type="hidden" name="next" value="/" />
+                        </div>
+                        <div class="submit-row">
+                            <label>&nbsp;</label>
+                            <input type="submit" value="Log in" />
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        document.getElementById('id_username').focus()
+                    </script>
+                </div>
+                <br class="clear" />
+            </div>
+            <!-- END Content -->
+            <div id="footer"></div>
+        </div>
+        <!-- END Container -->
+        </body>
+        </html>
+  recorded_at: Sun, 25 Feb 2024 12:36:29 GMT
+recorded_with: VCR 6.2.0

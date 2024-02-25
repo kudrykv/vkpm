@@ -23,4 +23,6 @@ loader.setup
 
 module VKPM
   class Error < StandardError; end
+
+  class BadCredentialsError < Error; end
 end

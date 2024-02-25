@@ -24,7 +24,11 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     base64 (0.1.1)
+    bigdecimal (3.1.6)
     concurrent-ruby (1.2.3)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     diff-lcs (1.5.1)
     docile (1.4.0)
     domain_name (0.6.20240107)
@@ -32,6 +36,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    hashdiff (1.1.0)
     http (5.1.0)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -122,6 +127,11 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
+    vcr (6.2.0)
+    webmock (3.22.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     wisper (2.0.1)
     zeitwerk (2.6.0)
 
@@ -135,7 +145,9 @@ DEPENDENCIES
   rubocop-rake (~> 0.6.0)
   rubocop-rspec (~> 2.24)
   simplecov (~> 0.22.0)
+  vcr (~> 6.2)
   vkpm!
+  webmock (~> 3.22)
 
 BUNDLED WITH
    2.4.21
