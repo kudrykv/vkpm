@@ -91,4 +91,20 @@ RSpec.describe VKPM::Clients::Website do
       end
     end
   end
+
+  describe '.breaks' do
+    context 'when the user is authorized' do
+      context 'when user has some breaks' do
+        it 'returns a list of breaks' do
+          VCR.use_cassette('website/breaks') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+            breaks = website.breaks(year: 2020)
+
+            expect(breaks).to all(be_a_valid_break)
+          end
+        end
+      end
+    end
+  end
 end
