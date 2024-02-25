@@ -32,3 +32,6 @@ RSpec/ExampleLength:
 
 RSpec/StubbedMock:
   Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false

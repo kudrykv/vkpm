@@ -47,6 +47,7 @@ VCR.configure do |config|
       header.gsub!(/csrftoken=[^;]+;?/, "csrftoken=#{STUB_CSRF_TOKEN};")
       header.gsub!(/sessionid=[^;]+;?/, "sessionid=#{STUB_SESSION_ID};")
     end
+    interaction.request.headers['X-Csrftoken']&.each { |header| header.gsub!(/^.*$/, STUB_CSRF_TOKEN) }
 
     interaction.request.body.gsub!(domain, STUB_DOMAIN) if domain
     request_body_replacers.each do |replacer|

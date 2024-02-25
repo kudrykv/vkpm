@@ -25,4 +25,5 @@ module VKPM
   class Error < StandardError; end
 
   class BadCredentialsError < Error; end
+  class NotAuthorizedError < Error; end
 end

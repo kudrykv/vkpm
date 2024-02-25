@@ -29,4 +29,21 @@ RSpec.describe VKPM::Clients::Website do
       end
     end
   end
+
+  describe '.reported_entries' do
+    context 'when the user is authorized' do
+      context 'when user has some entries' do
+        it 'returns a list of entries' do
+          VCR.use_cassette('website/reported_entries') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+            entries = website.reported_entries(year: 2020, month: 1)
+
+            expect(entries).to be_an(Array)
+            expect(entries).to all(be_a(VKPM::Entities::ReportEntry))
+          end
+        end
+      end
+    end
+  end
 end

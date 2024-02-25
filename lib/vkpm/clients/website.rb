@@ -155,6 +155,8 @@ module VKPM
       end
 
       def auth_http
+        raise NotAuthorizedError, 'You must login first' if auth_cookies.empty?
+
         HTTP.cookies(**auth_cookies).headers(headers)
       end
 
