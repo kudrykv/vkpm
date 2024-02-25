@@ -210,4 +210,34 @@ RSpec.describe VKPM::Adapters::Config do
       end
     end
   end
+
+  describe '.to_h' do
+    let(:pairs) do
+      [
+        { name: 'backend.domain', value: 'https://example.com' },
+        { name: 'auth.cookies', value: [{ 'name' => 'k1', 'value' => 'v1'}] },
+        { name: 'default.project.name', value: 'Project' },
+        { name: 'default.activity.name', value: 'Activity' }
+      ]
+    end
+
+    let(:expected_hash) do
+      {
+        'backend.domain' => 'https://example.com',
+        'auth.cookies' => '********',
+        'default.project.name' => 'Project',
+        'default.activity.name' => 'Activity'
+      }
+    end
+
+    before do
+      pairs.each { |pair| allow(client).to receive(:fetch).with(pair[:name]).and_return(pair[:value]) }
+    end
+
+    it 'returns a hash with the keys and values' do
+      expect(config.to_h).to eq(expected_hash)
+
+      pairs.each { |pair| expect(client).to have_received(:fetch).with(pair[:name]) }
+    end
+  end
 end
