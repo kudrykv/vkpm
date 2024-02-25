@@ -179,4 +179,35 @@ RSpec.describe VKPM::Adapters::Config do
       end
     end
   end
+
+  describe '.default_activity' do
+    let(:key) { 'default.activity' }
+
+    context 'when the activity is set' do
+      let(:activity) { { 'id' => 1, 'name' => 'Activity' } }
+      let(:expected_activity) { VKPM::Entities::Activity.new(id: 1, name: 'Activity') }
+
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(activity)
+      end
+
+      it 'returns the activity' do
+        expect(config.default_activity).to eq(expected_activity)
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+
+    context 'when the activity is not set' do
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(nil)
+      end
+
+      it 'returns nil' do
+        expect(config.default_activity).to be_nil
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+  end
 end
