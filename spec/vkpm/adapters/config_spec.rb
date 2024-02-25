@@ -215,7 +215,7 @@ RSpec.describe VKPM::Adapters::Config do
     let(:pairs) do
       [
         { name: 'backend.domain', value: 'https://example.com' },
-        { name: 'auth.cookies', value: [{ 'name' => 'k1', 'value' => 'v1'}] },
+        { name: 'auth.cookies', value: [{ 'name' => 'k1', 'value' => 'v1' }] },
         { name: 'default.project.name', value: 'Project' },
         { name: 'default.activity.name', value: 'Activity' }
       ]
