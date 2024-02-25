@@ -10,6 +10,7 @@ require_relative 'support/vcr'
 
 require_relative 'support/matchers/be_a_valid_reported_entry'
 require_relative 'support/matchers/be_a_valid_break'
+require_relative 'support/matchers/be_a_valid_project'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

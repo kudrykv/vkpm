@@ -107,4 +107,21 @@ RSpec.describe VKPM::Clients::Website do
       end
     end
   end
+
+  describe '.available_projects' do
+    context 'when the user is authorized' do
+      context 'when user has some projects' do
+        it 'returns a list of projects' do
+          VCR.use_cassette('website/available_projects') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+            projects = website.available_projects
+
+            expect(projects).to have_attributes(size: be > 0)
+            expect(projects).to all(be_a_valid_project)
+          end
+        end
+      end
+    end
+  end
 end
