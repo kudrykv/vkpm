@@ -32,10 +32,7 @@ module VKPM
       end
 
       def backend_domain
-        domain = client.fetch('backend.domain')
-        raise Error, 'Backend domain is not set' if domain.nil?
-
-        domain
+        client.fetch('backend.domain')
       end
 
       def auth_cookies

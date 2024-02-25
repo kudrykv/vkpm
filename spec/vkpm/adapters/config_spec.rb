@@ -86,4 +86,67 @@ RSpec.describe VKPM::Adapters::Config do
       end
     end
   end
+
+  describe '.backend_domain' do
+    context 'when the domain is set' do
+      let(:key) { 'backend.domain' }
+      let(:domain) { 'https://example.com' }
+
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(domain)
+      end
+
+      it 'returns the domain' do
+        expect(config.backend_domain).to eq(domain)
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+
+    context 'when the domain is not set' do
+      let(:key) { 'backend.domain' }
+
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(nil)
+      end
+
+      it 'returns nil' do
+        expect(config.backend_domain).to be_nil
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+  end
+
+  describe '.auth_cookies' do
+    context 'when the cookies are set' do
+      let(:key) { 'auth.cookies' }
+      let(:serialized_cookies) { [{ 'name' => 'k1', 'value' => 'v1' }, { 'name' => 'k2', 'value' => 'v2' }] }
+      let(:cookies) { [VKPM::Entities::Cookie.new('k1', 'v1'), VKPM::Entities::Cookie.new('k2', 'v2')] }
+
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(serialized_cookies)
+      end
+
+      it 'returns the cookies' do
+        expect(config.auth_cookies).to eq(cookies)
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+
+    context 'when the cookies are not set' do
+      let(:key) { 'auth.cookies' }
+
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(nil)
+      end
+
+      it 'returns nil' do
+        expect(config.auth_cookies).to be_nil
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+  end
 end

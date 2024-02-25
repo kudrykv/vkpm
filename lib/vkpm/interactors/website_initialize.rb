@@ -13,6 +13,8 @@ module VKPM
       private
 
       def client
+        raise VKPM::Error, 'Backend domain is not set' unless domain
+
         VKPM::Clients::Website.new(domain:)
       end
 
