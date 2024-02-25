@@ -183,7 +183,7 @@ RSpec.describe VKPM::Clients::Website do
             cookies = website.login(username, password)
             website.auth(cookies)
 
-            expect { website.report(report_entry) }.to raise_error(VKPM::Error)
+            expect { website.report(report_entry) }.to raise_error(VKPM::ReportError)
           end
         end
       end
