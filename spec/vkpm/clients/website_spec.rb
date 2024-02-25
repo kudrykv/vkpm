@@ -187,6 +187,56 @@ RSpec.describe VKPM::Clients::Website do
           end
         end
       end
+
+      context 'when one tries to report far past event' do
+        let(:project) { VKPM::Entities::Project.new(id: '591', name: 'Catapult') }
+        let(:activity) { VKPM::Entities::Activity.new(id: '1', name: 'Development') }
+        let(:task) do
+          VKPM::Entities::Task.new(
+            name: 'Catapult',
+            description: 'Catapult',
+            status: 100,
+            date: Date.new(2024, 2, 5),
+            starts_at: Time.new(2024, 2, 5, 9, 0, 0),
+            ends_at: Time.new(2024, 2, 5, 13, 0, 0)
+          )
+        end
+        let(:report_entry) { VKPM::Entities::ReportEntry.new(project:, activity:, task:) }
+
+        it 'raises an error' do
+          VCR.use_cassette('website/report_past') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+
+            expect { website.report(report_entry) }.to raise_error(VKPM::ReportError)
+          end
+        end
+      end
+
+      context 'when one tries to report future event' do
+        let(:project) { VKPM::Entities::Project.new(id: '591', name: 'Catapult') }
+        let(:activity) { VKPM::Entities::Activity.new(id: '1', name: 'Development') }
+        let(:task) do
+          VKPM::Entities::Task.new(
+            name: 'Catapult',
+            description: 'Catapult',
+            status: 100,
+            date: Date.new(2024, 2, 28),
+            starts_at: Time.new(2024, 2, 28, 9, 0, 0),
+            ends_at: Time.new(2024, 2, 28, 13, 0, 0)
+          )
+        end
+        let(:report_entry) { VKPM::Entities::ReportEntry.new(project:, activity:, task:) }
+
+        it 'raises an error' do
+          VCR.use_cassette('website/report_future') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+
+            expect { website.report(report_entry) }.to raise_error(VKPM::ReportError)
+          end
+        end
+      end
     end
   end
 end
