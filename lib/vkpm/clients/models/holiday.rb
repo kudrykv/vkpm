@@ -24,7 +24,7 @@ module VKPM
           end
 
           def split_holiday_name_and_date(line)
-            line.gsub(/^([^(]+)\(([^)]+)\)/, '\1, \2').split(',')
+            line.gsub(/^([^(]+)\(([^)]+)\)/, '\1, \2').split(',').map(&:strip)
           end
 
           def initialize_holiday(row)

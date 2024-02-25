@@ -69,4 +69,26 @@ RSpec.describe VKPM::Clients::Website do
       end
     end
   end
+
+  describe '.holidays_this_year' do
+    context 'when the user is authorized' do
+      let(:expected_holidays) do
+        [
+          VKPM::Entities::Holiday.new(name: 'Easter Monday', date: Date.new(2024, 5, 6)),
+          VKPM::Entities::Holiday.new(name: 'Christmas Day', date: Date.new(2024, 12, 25))
+        ]
+      end
+
+      it 'returns a list of holidays for the current year' do
+        VCR.use_cassette('website/holidays_this_year') do
+          cookies = website.login(username, password)
+          website.auth(cookies)
+          holidays = website.holidays_this_year
+
+          expect(holidays).to all(be_a(VKPM::Entities::Holiday))
+          expect(holidays).to include(*expected_holidays)
+        end
+      end
+    end
+  end
 end

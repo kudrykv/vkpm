@@ -9,6 +9,12 @@ module VKPM
         @date = date
         @name = name
       end
+
+      def ==(other)
+        instance_of?(other.class) &&
+          date == other.date &&
+          name == other.name
+      end
     end
   end
 end
