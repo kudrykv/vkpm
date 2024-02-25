@@ -119,8 +119,9 @@ RSpec.describe VKPM::Adapters::Config do
   end
 
   describe '.auth_cookies' do
+    let(:key) { 'auth.cookies' }
+
     context 'when the cookies are set' do
-      let(:key) { 'auth.cookies' }
       let(:serialized_cookies) { [{ 'name' => 'k1', 'value' => 'v1' }, { 'name' => 'k2', 'value' => 'v2' }] }
       let(:cookies) { [VKPM::Entities::Cookie.new('k1', 'v1'), VKPM::Entities::Cookie.new('k2', 'v2')] }
 
@@ -136,14 +137,43 @@ RSpec.describe VKPM::Adapters::Config do
     end
 
     context 'when the cookies are not set' do
-      let(:key) { 'auth.cookies' }
-
       before do
         allow(client).to receive(:fetch).with(key).and_return(nil)
       end
 
       it 'returns nil' do
         expect(config.auth_cookies).to be_nil
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+  end
+
+  describe '.default_project' do
+    let(:key) { 'default.project' }
+
+    context 'when the project is set' do
+      let(:project) { { 'id' => 1, 'name' => 'Project' } }
+      let(:expected_project) { VKPM::Entities::Project.new(id: 1, name: 'Project') }
+
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(project)
+      end
+
+      it 'returns the project' do
+        expect(config.default_project).to eq(expected_project)
+
+        expect(client).to have_received(:fetch).with(key)
+      end
+    end
+
+    context 'when the project is not set' do
+      before do
+        allow(client).to receive(:fetch).with(key).and_return(nil)
+      end
+
+      it 'returns nil' do
+        expect(config.default_project).to be_nil
 
         expect(client).to have_received(:fetch).with(key)
       end

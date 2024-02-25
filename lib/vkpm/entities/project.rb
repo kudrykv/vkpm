@@ -24,6 +24,10 @@ module VKPM
       def similar?(other)
         instance_of?(other.class) && name.downcase == other.name.downcase
       end
+
+      def ==(other)
+        instance_of?(other.class) && id == other.id && name == other.name
+      end
     end
   end
 end
