@@ -8,6 +8,8 @@ require 'uri/http'
 
 require_relative 'support/vcr'
 
+require_relative 'support/matchers/be_a_valid_reported_entry'
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'

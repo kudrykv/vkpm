@@ -39,8 +39,7 @@ RSpec.describe VKPM::Clients::Website do
             website.auth(cookies)
             entries = website.reported_entries(year: 2020, month: 1)
 
-            expect(entries).to be_an(Array)
-            expect(entries).to all(be_a(VKPM::Entities::ReportEntry))
+            expect(entries).to all(be_a_valid_reported_entry)
           end
         end
       end
