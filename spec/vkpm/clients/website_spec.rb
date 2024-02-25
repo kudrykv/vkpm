@@ -149,4 +149,33 @@ RSpec.describe VKPM::Clients::Website do
       end
     end
   end
+
+  describe '.report' do
+    context 'when the user is authorized' do
+      context 'when the report is successful' do
+        let(:project) { VKPM::Entities::Project.new(id: '591', name: 'Catapult') }
+        let(:activity) { VKPM::Entities::Activity.new(id: '1', name: 'Development') }
+        let(:task) do
+          VKPM::Entities::Task.new(
+            name: 'Catapult',
+            description: 'Catapult',
+            status: 100,
+            date: Date.new(2024, 2, 23),
+            starts_at: Time.new(2024, 2, 23, 9, 0, 0),
+            ends_at: Time.new(2024, 2, 23, 13, 0, 0)
+          )
+        end
+        let(:report_entry) { VKPM::Entities::ReportEntry.new(project:, activity:, task:) }
+
+        it 'returns a success message' do
+          VCR.use_cassette('website/report_successfully') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+
+            expect { website.report(report_entry) }.not_to raise_error
+          end
+        end
+      end
+    end
+  end
 end
