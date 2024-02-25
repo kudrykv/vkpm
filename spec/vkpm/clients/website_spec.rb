@@ -43,6 +43,30 @@ RSpec.describe VKPM::Clients::Website do
           end
         end
       end
+
+      context 'when user asks for entries from future' do
+        it 'returns an empty list' do
+          VCR.use_cassette('website/reported_entries_future') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+            entries = website.reported_entries(year: 2025, month: 1)
+
+            expect(entries).to be_empty
+          end
+        end
+      end
+
+      context 'when user asks for entries too far away past' do
+        it 'returns an empty list' do
+          VCR.use_cassette('website/reported_entries_past') do
+            cookies = website.login(username, password)
+            website.auth(cookies)
+            entries = website.reported_entries(year: 2000, month: 1)
+
+            expect(entries).to be_empty
+          end
+        end
+      end
     end
   end
 end
