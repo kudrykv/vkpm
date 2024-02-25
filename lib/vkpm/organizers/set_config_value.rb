@@ -6,8 +6,7 @@ module VKPM
       include Interactor::Organizer
 
       organize Interactors::ConfigInitialize,
-               Interactors::ConfigSetKeyValue,
-               Interactors::ConfigSave
+               Interactors::ConfigSetKeyValue
     end
   end
 end

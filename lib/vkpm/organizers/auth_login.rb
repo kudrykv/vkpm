@@ -8,8 +8,7 @@ module VKPM
       organize Interactors::ConfigInitialize,
                Interactors::WebsiteInitialize,
                Interactors::WebsiteLogin,
-               Interactors::ConfigSetKeyValue,
-               Interactors::ConfigSave
+               Interactors::ConfigSetKeyValue
     end
   end
 end
