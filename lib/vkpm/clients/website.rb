@@ -16,7 +16,7 @@ module VKPM
         response = HTTP.cookies(cookies).post("#{domain}/login/", form:, headers:)
         raise BadCredentialsError, error_message(response) if response.status == 200
 
-        response.cookies.to_a.map { |cookie| Entities::Cookie.new(cookie.name, cookie.value) }
+        response.cookies.to_a.map(&method(:cookie_to_entity_cookie))
       end
 
       def auth(cookies)
@@ -87,6 +87,10 @@ module VKPM
       end
 
       private
+
+      def cookie_to_entity_cookie(cookie)
+        Entities::Cookie.new(cookie.name, cookie.value)
+      end
 
       attr_reader :domain, :auth_cookies
 
