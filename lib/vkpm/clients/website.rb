@@ -101,10 +101,6 @@ module VKPM
       attr_reader :domain, :auth_cookies
 
       def enable_all_blocks_in_dashboard
-        uri = "#{domain}/dashboard/"
-        response = auth_http.get(uri)
-        dashboard_id = Nokogiri.parse(response.body.to_s).xpath('//input[@name="id"]').attr('value').to_s
-
         form = csrf_form.merge(
           id: dashboard_id,
           user_salary_block: 'on',
@@ -114,7 +110,12 @@ module VKPM
           users_block: 'on'
         )
 
-        auth_http.post("#{uri}/update/", form:)
+        auth_http.post("#{domain}/dashboard/update/", form:)
+      end
+
+      def dashboard_id
+        response = auth_http.get("#{domain}/dashboard/")
+        Nokogiri.parse(response.body.to_s).xpath('//input[@name="id"]').attr('value').to_s
       end
 
       def initial_csrf_cookie
