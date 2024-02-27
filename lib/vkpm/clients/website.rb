@@ -24,16 +24,10 @@ module VKPM
       end
 
       def reported_entries(year:, month:)
-        response = auth_http.post("#{domain}/history/", form: { year:, month: })
+        editable = editable_ids
 
-        history_entries = Models::ReportEntry.from_html(response.body.to_s)
-
-        response = auth_http.get("#{domain}/report/")
-
-        editable_ids = Models::ReportEntry.from_report_html_editable_ids(response.body.to_s)
-
-        history_entries.each do |entry|
-          entry.can_edit = editable_ids.include?(entry.id)
+        history_entries(year:, month:).each do |entry|
+          entry.can_edit = editable.include?(entry.id)
         end
       end
 
@@ -87,6 +81,18 @@ module VKPM
       end
 
       private
+
+      def history_entries(year:, month:)
+        response = auth_http.post("#{domain}/history/", form: { year:, month: })
+
+        Models::ReportEntry.from_html(response.body.to_s)
+      end
+
+      def editable_ids
+        response = auth_http.get("#{domain}/report/")
+
+        Models::ReportEntry.from_report_html_editable_ids(response.body.to_s)
+      end
 
       def cookie_to_entity_cookie(cookie)
         Entities::Cookie.new(cookie.name, cookie.value)
