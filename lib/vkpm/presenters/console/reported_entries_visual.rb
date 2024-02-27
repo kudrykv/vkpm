@@ -117,7 +117,7 @@ module VKPM
           end
 
           def formatted_entries
-            day_entries.map(&method(:format_entry)).join(' ')
+            day_entries.map(&method(:format_entry)).join
           end
 
           def format_entry(entry)
