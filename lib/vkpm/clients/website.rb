@@ -143,6 +143,7 @@ module VKPM
         { csrfmiddlewaretoken: csrf }
       end
 
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def report_entry_form(entry)
         {
           project_id: entry.project.id,
@@ -158,6 +159,7 @@ module VKPM
           task_desc: entry.task.description
         }
       end
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def test_report_response_for_error(response)
         raise ReportError, response.body.to_s if response.status == 400
