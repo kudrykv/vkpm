@@ -10,9 +10,8 @@ module VKPM
       end
 
       def login(username, password)
-        csrf_cookie = initial_csrf_cookie
-        cookies = HTTP::CookieJar.new.add(csrf_cookie)
-        form = login_form(username, password, csrf_cookie)
+        cookies = HTTP::CookieJar.new.add(initial_csrf_cookie)
+        form = login_form(username, password, initial_csrf_cookie)
 
         response = HTTP.cookies(cookies).post("#{domain}/login/", form:, headers:)
         raise BadCredentialsError, error_message(response) if response.status == 200
@@ -109,12 +108,14 @@ module VKPM
       end
 
       def initial_csrf_cookie
-        response = HTTP.get("#{domain}/login/")
-        cookie = response.cookies.to_a.find { |c| c.name == 'csrftoken' }
+        @initial_csrf_cookie ||= begin
+          response = HTTP.get("#{domain}/login/")
+          cookie = response.cookies.to_a.find { |c| c.name == 'csrftoken' }
 
-        raise Error, 'Could not find csrf token' unless cookie
+          raise APIError, 'Could not find csrf token' unless cookie
 
-        cookie
+          cookie
+        end
       end
 
       def login_form(username, password, csrf_cookie)

@@ -41,4 +41,3 @@ RSpec::Matchers.define :be_a_valid_reported_entry do
     true
   end
 end
-

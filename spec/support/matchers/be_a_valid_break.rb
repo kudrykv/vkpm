@@ -9,4 +9,3 @@ RSpec::Matchers.define :be_a_valid_break do
       actual.used_days.is_a?(Integer)
   end
 end
-

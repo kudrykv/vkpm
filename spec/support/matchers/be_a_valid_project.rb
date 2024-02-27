@@ -7,4 +7,3 @@ RSpec::Matchers.define :be_a_valid_project do
       actual.name.present?
   end
 end
-
