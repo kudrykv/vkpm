@@ -5,7 +5,7 @@ module VKPM
     module Commands
       class Compensation < Thor
         desc 'check', 'Check compensation'
-        option :report_date, type: :string, default: Date.today.to_s.split('-').first(2).reverse.join('-')
+        option :report_date, type: :string, default: Date.today.strftime('%b %Y')
         def check
           result = Organizers::CompensationCheck.call(report_date:)
           raise Error, result.error if result.failure?
