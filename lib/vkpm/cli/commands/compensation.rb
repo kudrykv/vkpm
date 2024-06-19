@@ -7,7 +7,7 @@ module VKPM
         desc 'show', 'Show compensation'
         option :report_date, type: :string, default: Date.today.strftime('%b %Y')
         def show
-          result = Organizers::CompensationCheck.call(report_date:)
+          result = Organizers::CompensationShow.call(report_date:)
           raise Error, result.error if result.failure?
 
           puts Presenters::Console::Compensation.new(result.compensation)

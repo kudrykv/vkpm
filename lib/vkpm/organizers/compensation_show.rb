@@ -2,7 +2,7 @@
 
 module VKPM
   module Organizers
-    class CompensationCheck
+    class CompensationShow
       include Interactor::Organizer
 
       organize VKPM::Interactors::ConfigInitialize,
