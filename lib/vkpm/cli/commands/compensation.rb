@@ -4,9 +4,9 @@ module VKPM
   module CLI
     module Commands
       class Compensation < Thor
-        desc 'check', 'Check compensation'
+        desc 'show', 'Show compensation'
         option :report_date, type: :string, default: Date.today.strftime('%b %Y')
-        def check
+        def show
           result = Organizers::CompensationCheck.call(report_date:)
           raise Error, result.error if result.failure?
 
