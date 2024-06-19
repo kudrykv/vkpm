@@ -8,6 +8,8 @@ module VKPM
           def from_html(html, date)
             doc = Nokogiri::HTML.parse(html)
             some_rate = largest_rate_number(doc)
+            raise Error, "No rate found for #{date.strftime('%b %Y')}" if some_rate.nil?
+
             total = total(doc)
 
             compensation = if some_rate / total < 0.1
