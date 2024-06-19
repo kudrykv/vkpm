@@ -10,8 +10,8 @@ module VKPM
         @description = description
         @status = status
         @date = date
-        @starts_at = starts_at
-        @ends_at = ends_at
+        @starts_at = str2datetime(date, starts_at)
+        @ends_at = str2datetime(date, ends_at)
         @span = span
 
         @errors = []
@@ -87,7 +87,7 @@ module VKPM
 
       def overlaps?(day_entries)
         day_entries.any? do |entry|
-          ((entry.starts_at + 1.second)..(entry.ends_at - 1.second)).overlaps?(starts_at..ends_at)
+          ((entry.task.starts_at + 1.second)..(entry.task.ends_at - 1.second)).overlaps?(starts_at..ends_at)
         end
       end
 
@@ -101,6 +101,12 @@ module VKPM
         self.ends_at = starts_at + span
 
         raise Error, 'span spilled over to the next day' if ends_at > starts_at.end_of_day
+      end
+
+      def str2datetime(date, time_as_str)
+        return nil if time_as_str.nil?
+
+        DateTime.parse("#{date} #{time_as_str}")
       end
     end
   end
