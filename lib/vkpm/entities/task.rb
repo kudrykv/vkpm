@@ -32,7 +32,7 @@ module VKPM
 
         errors << 'starts_at and ends_at or span must be set' if starts_at.nil? && ends_at.nil? && span.nil?
 
-        if starts_at && ends_at && span && ((ends_at - starts_at).seconds != span)
+        if starts_at && ends_at && span && (duration != span)
           errors << 'starts_at, ends_at and span are not consistent'
         end
 
@@ -67,7 +67,7 @@ module VKPM
       end
 
       def duration
-        (ends_at - starts_at).seconds
+        (ends_at.to_time - starts_at.to_time).seconds
       end
 
       private
