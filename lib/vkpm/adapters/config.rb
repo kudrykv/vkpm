@@ -21,14 +21,14 @@ module VKPM
         raise VKPM::Error, "Invalid key: #{key}" unless ACCEPTABLE_KEYS.map { |entry| entry[:name] }.include?(key)
 
         client.set(key, value:)
-        client.write
+        write
       end
 
       def unset(key)
         raise VKPM::Error, "Invalid key: #{key}" unless ACCEPTABLE_KEYS.map { |entry| entry[:name] }.include?(key)
 
         client.delete(key)
-        client.write
+        write
       end
 
       def backend_domain
